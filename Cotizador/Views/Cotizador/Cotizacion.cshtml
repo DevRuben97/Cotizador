@@ -20,14 +20,83 @@
                             <input type="text" class="form-control" placeholder="Nombre Del Cliente" name="cliente" id="Clientes"/>
                         </div>
                         <div class="col-md-3">
-                            <label>Apellido</label>
-                            <input type="text" class="form-control" placeholder="Apellido Del Cliente" id="Apellidocliente" />
+                            <label for="Apellido">Apellido</label>
+                            <input type="text" class="form-control" placeholder="Apellido Del Cliente" id="Apellidocliente" name="Apellido" />
+                        </div>
+                        <div class="col-md-3">
+                            <label for="TipoCliente">Tipo de Cliente</label>
+                            <select class="form-control" id="TipoCliente" name="TipoCliente">
+                                <option>Empresa</option>
+                                <option>Persona</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="TipoIdentificacion">Tipo De Identificación</label>
+                            <select class="form-control" id="TipoDni" name="TipoDNI">
+                                <option>CEDULA</option>
+                                <option>PASAPORTE</option>
+                                <option>RNC</option>
+                            </select>
                         </div>
                     </div>
+                    <!--Segunda fila Del Formulario-->
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>#Identifiacación</label>
+                            <input type="text" placeholder="Ingresa Una Identificación" class="form-control" id="NumIden" name="DNI" />
+                        </div>
+                        <div class="col-md-5">
+                            <label>Dirección</label>
+                            <input type="text" class="form-control" placeholder="Ingresa La Dirección Del Cliente" id="Direccion" name="direccion" />
+                        </div>
+                        <div class="col-md-3">
+                            <label>Telefono</label>
+                            <input type="tel" class="form-control" placeholder="Telefono O Celular" id="Telefono" name="telefono" />
+                        </div>
+                    </div>
+                    <!--Tercera Fila Del Formulario de Cliente-->
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Corro Electronico</label>
+                            <input type="email" class="form-control" placeholder="Ingrese Un Correo" id="Correo" name="email"
+                        </div>
+                    </div>
+
                 </div>
            </div>
     </div>
 </form>
 
 </div>
-
+<!--Parte De Los Productos-->
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            Productos O Servicios
+        </div>
+        <div class="card-body">
+            <button class="btn btn-primary"><i class="fas fa-plus"></i> Agregar Servico</button>
+            <button class="btn btn-secondary"><i class="fas fa-print"></i> Inprimir Comprobante</button>
+             <!--Tabla De Datos--> 
+            <div>
+                <table class="table" id="TableServicios">
+                    <thead>
+                        <tr>
+                            <th>Codigo</th>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Cantidad</th>
+                            <th>Precio Unidad</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
