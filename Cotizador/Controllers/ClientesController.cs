@@ -13,8 +13,9 @@ namespace Cotizador.Controllers
         //Clientes Que Contiene El Sistema.
         public ActionResult Lista()
         {
-            var lista = context.cliente.ToList();
-            return View(lista);
+
+            var clientes = context.Database.SqlQuery<Models.Clientes>("select top 100 * from clientes").ToList();
+            return View(clientes);
         }
         [HttpGet]
         public ActionResult Nuevo()
@@ -22,12 +23,19 @@ namespace Cotizador.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Nuevo(Models.Clientes Cliente)
         {
-            context.cliente.Add(Cliente);
-            context.SaveChanges();
+            if (ModelState.IsValid)
+            {
+                context.cliente.Add(Cliente);
+                context.SaveChanges();
+                return RedirectToAction("Lista");
+            }
+            return View();
+            
 
-            return RedirectToAction("Lista");
+           
         }
 
     }

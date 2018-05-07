@@ -12,7 +12,7 @@ namespace Cotizador.Controllers
 
         public ActionResult Lista() // Lista de Contizaciones Hechas.
         {
-            var lista = context.cotizacion.ToList();
+            var lista = context.Database.SqlQuery<Models.Cotizaciones>("select * from Cotizaciones").ToList();
             return View(lista);
         }
         public ActionResult Cotizacion()
