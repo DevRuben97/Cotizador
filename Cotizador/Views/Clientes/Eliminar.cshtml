@@ -6,18 +6,18 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-7">
+        <div class="col-md-8">
             <label style="color:black; font-family:'Segoe UI'; font-style:italic">¿Esta Seguro De Eliminar Este Cliente?</label>
-            <label class="text-dark">Nombre:</label>
-            @Html.LabelFor(model => model.nombre)
+            <label><strong>ID:</strong></label>
+            <label id="modelID">@Html.DisplayTextFor(model=>model.id)</label>
             <br />
-            <label class="text-dark">Apellido:</label>
-            @Html.LabelFor(model=> model.apellido)
+            <label class="text-dark"><strong>Nombre:</strong></label>
+            @Html.DisplayFor(model => model.nombre)
+            <br />
+            <label class="text-dark"><strong>Apellido:</strong></label>
+            @Html.DisplayFor(model=> model.apellido)
         </div>
     </div>
 
-</div>
-<div class="container">
-    <input type="button" class="btn btn-danger" value="Eliminar" onclick="EliminarCliente(@Model.id, @Url.Action("ConfDelete", "Clientes")" />
 </div>
 

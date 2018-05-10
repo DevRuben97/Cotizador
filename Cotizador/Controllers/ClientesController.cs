@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.SqlClient;
 
 namespace Cotizador.Controllers
 {
@@ -53,12 +54,30 @@ namespace Cotizador.Controllers
             return PartialView(cliente);
         }
         [HttpPost]
-        public PartialViewResult ConfDelete(Models.Clientes cliente)//Eliminar El Cliente seleccionado.
+        public JsonResult ConfDelete(int id)//Eliminar El Cliente seleccionado.
         {
 
-            context.cliente.Remove(cliente);
+            try
+            {
+                var Cliente = context.cliente.Find(id);
+
+                if (Cliente == null)
+                {
+                    return Json(new { Mensaje = "No Se Pudo Encotrar el Cliente Solicitado" });
+                }
+                else
+                {
+                    context.cliente.Remove(Cliente);
+                    context.SaveChanges();
+                    return Json(new { Mensaje = "El Cliente Fue Eliminado Correctamente" });
+                }
+            }
+            catch(Exception ex)
+            {
+                return Json(new { Mensaje = "Error Ocurrido: " + ex.Message });
+            }
+
             
-            return PartialView();
         }
         [HttpPost]
         public JsonResult Buscar(string nombre)
