@@ -123,7 +123,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\Validations.js" />
+    <Content Include="Scripts\MyScripts\CrudFuntions.js" />
+    <Content Include="Scripts\MyScripts\Validations.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -156,6 +157,8 @@
     <Content Include="Views\Cotizador\Cotizacion.cshtml" />
     <Content Include="Views\Clientes\Lista.cshtml" />
     <Content Include="Views\Clientes\Nuevo.cshtml" />
+    <Content Include="Views\Clientes\_PDetalles.cshtml" />
+    <Content Include="Views\Clientes\Eliminar.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

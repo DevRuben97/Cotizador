@@ -1,0 +1,23 @@
+﻿@model Cotizador.Models.Clientes
+
+<div>
+    <h1 class="text-center text-primary">Eliminar Cliente</h1>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-7">
+            <label style="color:black; font-family:'Segoe UI'; font-style:italic">¿Esta Seguro De Eliminar Este Cliente?</label>
+            <label class="text-dark">Nombre:</label>
+            @Html.LabelFor(model => model.nombre)
+            <br />
+            <label class="text-dark">Apellido:</label>
+            @Html.LabelFor(model=> model.apellido)
+        </div>
+    </div>
+
+</div>
+<div class="container">
+    <input type="button" class="btn btn-danger" value="Eliminar" onclick="EliminarCliente(@Model.id, @Url.Action("ConfDelete", "Clientes")" />
+</div>
+
