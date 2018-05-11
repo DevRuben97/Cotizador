@@ -11,6 +11,17 @@
         <a class="btn btn-primary" href="Nuevo"><i class="fas fa-plus"></i> Agregar Cliente</a>
     </p>
 </div>
+<!--Mensaje De Aviso de Actividad Para El Usuario-->
+<div class="container-fluid" id="AlertBox">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="alert alert-success alert-dismissible fade show" id="UserAlert">
+                <button class="close" data-dismiss="alert"><span>&times;</span></button>
+                <i class="fas fa-check"></i> El Registro fue Eliminado Correctamente
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="col-md-12">
     <div class="card">
@@ -24,6 +35,11 @@
                     <button class="btn btn-primary" name="Buscar" id="btnbuscar"><i class="fas fa-search"></i></button>
                     <input type="search" class="form-control" placeholder="Buscar Por Nombre" id="txtBuscar" name="Buscar" />
                     <br />
+                </div>
+                <div class="col-md-5">
+                    <br />
+                    <br />
+                    <label>Mostrado Un Total de Registros: <strong>@Model.Count()</strong></label>
                 </div>
             </div>
             <table class="table">
@@ -85,7 +101,7 @@
                             @Html.DisplayFor(modelItem => item.email)
                         </td>
                         <td>
-                            <a class="btn btn-secondary" onclick="EditarCliente(@item.id)" data-toggle="modal" data-placement="top" title="Editar" data-target="#exampleModal"><i class="fas fa-edit"></i></a>
+                            <a class="btn btn-secondary" onclick="EditarCliente(@item.id)" data-toggle="modal" data-placement="#exampleModal" title="Editar" data-target="#exampleModal"><i class="fas fa-edit"></i></a>
                             <a class="btn btn-danger" onclick="EliminarCliente(@item.id)" data-toggle="modal" data-target="#exampleModal" data-placement="top" title="Eliminar"><i class="fas fa-times-circle"></i></a>
                             <a class="btn btn-info" onclick="MostrarDetalles(@item.id)" data-toggle="modal" data-target="#exampleModal" data-placement="top" title="Detalles"><i class="fas fa-info-circle"></i></a>
                         </td>
@@ -101,16 +117,16 @@
 </div>
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="modaltitle">Modal title</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="CloseModal()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body" id="modalBody">
-               
+               <h1 class="text-center">Cargando...</h1>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="CloseModal()" id="btnsecundary">Cancelar</button>
@@ -122,8 +138,9 @@
 <!--Script para buscar los datos utiliando ajax Jquery-->
 <script>
     function MostrarDetalles(id) {
-        $(document).ready(function () {
 
+        $(document).ready(function () {
+            $("#modaltitle").text("Detalle Del Cliente:");
             $("#btnprimary").hide();
 
             $.get('@Url.Action("Detalles", "Clientes")' + "/" + id, function (data, status) {
@@ -135,6 +152,7 @@
     function EliminarCliente(id) {
 
         $(document).ready(function () {
+            $("#modaltitle").text("Confirmar Eliminación:");
             //Operacion de solicitud utilizando ajax
             $("#btnprimary").text("Eliminar Cliente").addClass("btn btn-danger");
 
@@ -154,7 +172,10 @@
                 $.post('@Url.Action("ConfDelete", "Clientes")' + "/", datos, function (back, status) {
 
                     alert(back.Mensaje);
-                    location.reload(true);
+                    $("#exampleModal").modal("hide");
+                    CloseModal();
+                    
+                    //location.reload(true);
                 });
 
             });
@@ -164,11 +185,26 @@
         
 
     }
+    function EditarCliente(id) {
+        $(document).ready(function () {
+            $("#modaltitle").text("Editar Cliente");
+            //Obtener el los datos del Cliente Para Ser Editados.
+            $.get('@Url.Action("Editar","Clientes")' + "/" + id, function (back, status) {
+
+                
+                $("#modalBody").html(back);
+                
+
+            });
+
+        });
+
+    }
     function CloseModal() {
         //Linpiar El Modal
 
         $("#btnprimary").show();
-        $("#modalBody").html("");
+        $("#modalBody").html("<h1 class='text- center'>Cargando...</h1>");
 
     }
 </script>

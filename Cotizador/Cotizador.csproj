@@ -159,6 +159,7 @@
     <Content Include="Views\Clientes\Nuevo.cshtml" />
     <Content Include="Views\Clientes\_PDetalles.cshtml" />
     <Content Include="Views\Clientes\Eliminar.cshtml" />
+    <Content Include="Views\Clientes\_Editar.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

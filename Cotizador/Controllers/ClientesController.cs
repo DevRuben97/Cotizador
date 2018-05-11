@@ -69,14 +69,13 @@ namespace Cotizador.Controllers
                 {
                     context.cliente.Remove(Cliente);
                     context.SaveChanges();
-                    return Json(new { Mensaje = "El Cliente Fue Eliminado Correctamente" });
+                    return Json(new { Mensaje = "El Cliente Fue Eliminado Correctamente"});
                 }
             }
             catch(Exception ex)
             {
                 return Json(new { Mensaje = "Error Ocurrido: " + ex.Message });
             }
-
             
         }
         [HttpPost]
@@ -85,6 +84,22 @@ namespace Cotizador.Controllers
            var contenido= context.cliente.ToList().Where(x => x.nombre.Equals(nombre)).ToList();
            
             return Json("");
+        }
+        [HttpGet]
+        public PartialViewResult Editar(int id)
+        {
+            var cliente = context.cliente.Find(id);
+            if (cliente == null)
+            {
+                ViewBag.Mensaje = "No Se Pudo Encontrar el Cliente Solicitado";
+            }
+            return PartialView("_Editar",cliente);
+        }
+        [HttpPost]
+        public JsonResult Editar(Models.Clientes model)
+        {
+
+            return Json(new { });
         }
         public PartialViewResult Detalles(int id )
         {
