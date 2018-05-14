@@ -129,8 +129,8 @@
                <h1 class="text-center">Cargando...</h1>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="CloseModal()" id="btnsecundary">Cancelar</button>
-                <button type="button" class="btn btn-primary" id="btnprimary">Guardar Cambios</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="CloseModal()" id="btnsecundary"><i class="fas fa-times"></i> Cancelar</button>
+                <button type="button" class="btn btn-primary" id="btnprimary"><i class="fas fa-check"></i>Guardar Cambios</button>
             </div>
         </div>
     </div>
@@ -188,6 +188,7 @@
     function EditarCliente(id) {
         $(document).ready(function () {
             $("#modaltitle").text("Editar Cliente");
+            $("#btnprimary").text("Guardar Cambios").addClass("btn btn-primary");
             //Obtener el los datos del Cliente Para Ser Editados.
             $.get('@Url.Action("Editar","Clientes")' + "/" + id, function (back, status) {
 
@@ -197,14 +198,37 @@
 
             });
 
+            $("#btnprimary").click(function () {
+                
+                if ($("#EditarCliente").submit(ValidarCliente) == true) {
+
+                    var url = '@Url.Action("Editar", "Clientes")' + "/";
+                    $.post();
+                }
+
+            });
+
         });
 
     }
+    function ValidarCliente() {
+        //Validar los datos introducidos por el Usuario.
+        $(":input").each(function () {
+
+            if ($(this).val() == null || $(this).val() == "") {
+
+                $(this).append("<label class='text-danger'>No Puedes Dejar Los Campos Vancios</label>");
+            }
+
+        });
+       
+        
+    }
     function CloseModal() {
         //Linpiar El Modal
-
+        
         $("#btnprimary").show();
-        $("#modalBody").html("<h1 class='text- center'>Cargando...</h1>");
+        $("#modalBody").html("<h1 class='text-center'>Cargando...</h1>");
 
     }
 </script>

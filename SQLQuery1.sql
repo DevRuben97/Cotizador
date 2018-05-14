@@ -1,3 +1,2 @@
-﻿declare @id int
-set @id= 1
-delete from Clientes where id= @id
+﻿INSERT INTO Servicios(nombre, Descripcion, Costo)
+VALUES('InterCones', 'Reparacion de intercones Oficinas,Apar Etc', 3500)

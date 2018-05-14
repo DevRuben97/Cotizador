@@ -1,67 +1,59 @@
 ﻿@model Cotizador.Models.Clientes
 
 <div>
-    <p class="text-primary">Editando El Regitro de:<strong>@Model.nombre</strong></p>
+    <p class="text-primary">Editando El Regitro de:<strong> @Model.nombre @Model.apellido</strong></p>
 </div>
 <br />
 <div class="container-fluid">
-    <div class="form-group">
-        <form method="post">
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true, null, new { @class = "text-danger" })
-            <div class="row">
-                <div class="col-md-3">
-                    <label for="nombre">Nombre *</label>
-                    <input type="text" class="form-control" placeholder="Ingrese Un Nombre" id="nombre" name="nombre" />
-                    @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
-                </div>
-                <div class="col-md-3">
-                    <label for="apellido">Apellido *</label>
-                    <input type="text" class="form-control" placeholder="Ingrese Un Apellido" id="apellido" name="apellido" />
-                    @Html.ValidationMessageFor(model => model.apellido, "", new { @class = "text-danger" })
-                </div>
-                <div class="col-md-3">
-                    <label for="TipoCliente">Tipo De Cliente *</label>
-                    <select class="form-control" name="TipoCliente" id="TipoCliente">
-                        <option>Empresa</option>
-                        <option>Persona</option>
-                    </select>
-                    @Html.ValidationMessageFor(model => model.TipoCliente, "", new { @class = "text-danger" })
-                </div>
-                <div class="col-md-3">
-                    <label for="TipoDNI">Modo De Identificación: *</label>
-                    <select class="form-control" name="TipoDNI" id="TipoDNI">
-                        <option>CEDULA</option>
-                        <option>PASAPOETE</option>
-                        <option>RNC</option>
-                        <option>OTRO</option>
-                    </select>
-                    @Html.ValidationMessageFor(model => model.TipoDNI, "", new { @class = "text-danger" })
-                </div>
-                <div class="col-md-3">
-                    <label for="DNI">#Identificación: *</label>
-                    <input type="text" class="form-control" placeholder="Ingrese Identificación" id="DNI" name="DNI" />
-                    @Html.ValidationMessageFor(model => model.DNI, "", new { @class = "text-danger" })
-                </div>
-                <div class="col-md-6">
-                    <label for="direccion">Dirección: *</label>
-                    <input type="text" class="form-control" placeholder="Ingrese La Dirección" id="direccion" name="direccion" />
-                    @Html.ValidationMessageFor(model => model.direccion, "", new { @class = "text-danger" });
-                </div>
-                <div class="col-md-3">
-                    <label for="telefono">#Telefono: *</label>
-                    <input type="text" class="form-control" placeholder="Ingrese El Telefono" id="telefono" name="telefono" />
-                    @Html.ValidationMessageFor(model => model.telefono, "", new { @class = "text-danger" })
-                </div>
-                <div class="col-md-3">
-                    <label for="email">Correo Eletronico: *</label>
-                    <input type="email" class="form-control" placeholder="Ingrese El Correo" id="email" name="email" />
-                    @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" });
-                </div>
-
-            </div>
-        </form>
-
-    </div>
+  <form id="EditarCliente">
+      <div class="form-group">
+          <label for="nombre">Nombre *</label>
+          <input type="text" class="form-control" placeholder="Ingrese Un Nombre" id="nombre" name="nombre" value="@Model.nombre" />
+      </div>
+      <div class="form-group">
+          <label for="apellido">Apellido *</label>
+          <input type="text" class="form-control" placeholder="Ingrese Un Apellido" id="apellido" name="apellido" value="@Model.apellido"/>
+      </div>
+      <div class="form-group">
+          <label for="TipoCliente">Tipo De Cliente *</label>
+          @{
+                  string tipocliente = null;
+                  if (Model.TipoCliente == "Persona")
+                  {
+                      tipocliente = "Persona";
+                  }
+                  else { tipocliente = "Empresa"; }
+          <select class="form-control" name="TipoCliente" id="TipoCliente">
+              <option>Empresa</option>
+              <option>Persona</option>
+          </select>
+              }
+      </div>
+      <div class="form-group">
+          <label for="TipoDNI">Modo De Identificación: *</label>
+          <select class="form-control" name="TipoDNI" id="TipoDNI">
+              <option>CEDULA</option>
+              <option>PASAPOETE</option>
+              <option>RNC</option>
+              <option>OTRO</option>
+          </select>
+      </div>
+      <div class="form-group">
+          <label for="DNI">#Identificación: *</label>
+          <input type="text" class="form-control" placeholder="Ingrese Identificación" id="DNI" name="DNI" value="@Model.DNI"/>
+      </div>
+      <div class="form-group">
+          <label for="direccion">Dirección: *</label>
+          <input type="text" class="form-control" placeholder="Ingrese La Dirección" id="direccion" name="direccion" value="@Model.direccion"/>
+      </div>
+      <div class="form-group">
+          <label for="telefono">#Telefono: *</label>
+          <input type="text" class="form-control" placeholder="Ingrese El Telefono" id="telefono" name="telefono"  value="@Model.telefono"/>
+      </div>
+      <div class="form-group">
+          <label for="email">Correo Eletronico: *</label>
+          <input type="email" class="form-control" placeholder="Ingrese El Correo" id="email" name="email" value="@Model.email" />
+      </div>
+  </form>
 </div>
 
