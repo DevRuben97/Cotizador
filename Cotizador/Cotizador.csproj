@@ -400,6 +400,7 @@
     <Content Include="Views\Clientes\Eliminar.cshtml" />
     <Content Include="Views\Clientes\_Editar.cshtml" />
     <Content Include="Views\Servicios\Lista.cshtml" />
+    <Content Include="Views\Servicios\Nuevo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
