@@ -1,11 +1,20 @@
-﻿
-@{
-    ViewBag.Title = "Nuevo Servicio";
-}
+﻿@model Cotizador.Models.Servicios
 
-<h2 class="text-primary text-center"><i class="fas fa-wrench"></i>Servico Nuevo</h2>
-
-<div class="container">
-
-</div>
-
+<form>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        <label class="text-dark">Nombre</label>
+        <input type="text" placeholder="Ingresa El Nombre" id="nombre" name="nombre" class="form-control"/>
+        @Html.ValidationMessageFor(model=> model.nombre,"",new { @class="text-danger"})
+    </div>
+    <div class="form-group">
+        <label class="text-dark">Costo</label>
+        <input type="text" placeholder="Valor del Servicio" id="Costo" name="Costo" class="form-control" />
+        @Html.ValidationMessageFor(model=> model.Descripcion, "",new {@class="text-danger" })
+    </div>
+    <div class="form-group">
+        <label class="text-dark">Descripción</label>
+        <textarea type="text" placeholder="Pequeña Descripción" rows="4" class="form-control" name="Descripcion" ></textarea>
+        @Html.ValidationMessageFor(model=> model.Descripcion,"",new { @class="text-danger"})
+    </div>
+</form>

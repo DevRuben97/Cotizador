@@ -97,16 +97,30 @@ namespace Cotizador.Controllers
                 return Json(new { Error = ex.Message });
             }
         }
-        public ActionResult Nuevo()
+        [HttpGet]
+        public PartialViewResult Nuevo()
         {
-
-            return View();
+        
+            return PartialView("Nuevo");
         }
         [HttpPost]
-        public ActionResult Nuevo()
+        public JsonResult Nuevo(Models.Servicios servicios)
         {
-
-            return View();
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    context.servicio.Add(servicios);
+                    context.SaveChanges();
+                    return Json(new { Mensaje = "Se Ha  Credado Correctamente El Servicio" });
+                }
+                else { return Json(new { Mensaje = "El Modelo Es Invalido" }); }
+            }
+            catch(Exception ex)
+            {
+                return Json(new { Mensaje = "Ha Ocurrido Un Error: " + ex.Message });
+            }
+            
         }
 
     }

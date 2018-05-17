@@ -260,6 +260,7 @@
     <Content Include="Content\DataTables\swf\flashExport.swf" />
     <Content Include="Content\fontawesome-all.css" />
     <Content Include="Content\fontawesome-all.min.css" />
+    <Content Include="Content\MyStyles.css" />
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -360,8 +361,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\MyScripts\CrudFuntions.js" />
-    <Content Include="Scripts\MyScripts\Validations.js" />
+    <Content Include="Scripts\MyScripts\Operations.js" />
     <Content Include="Scripts\sweetalert2.all.js" />
     <Content Include="Web.config" />
   </ItemGroup>
