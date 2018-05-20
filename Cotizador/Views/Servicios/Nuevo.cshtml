@@ -1,6 +1,6 @@
 ﻿@model Cotizador.Models.Servicios
 
-<form>
+<form id="Servicios">
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
         <label class="text-dark">Nombre</label>
@@ -14,7 +14,7 @@
     </div>
     <div class="form-group">
         <label class="text-dark">Descripción</label>
-        <textarea type="text" placeholder="Pequeña Descripción" rows="4" class="form-control" name="Descripcion" ></textarea>
+        <textarea type="text" placeholder="Pequeña Descripción" rows="4" class="form-control" name="Descripcion" id="Descripcion" ></textarea>
         @Html.ValidationMessageFor(model=> model.Descripcion,"",new { @class="text-danger"})
     </div>
 </form>

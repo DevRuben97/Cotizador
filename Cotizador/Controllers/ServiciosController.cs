@@ -108,17 +108,14 @@ namespace Cotizador.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
-                {
                     context.servicio.Add(servicios);
                     context.SaveChanges();
-                    return Json(new { Mensaje = "Se Ha  Credado Correctamente El Servicio" });
-                }
-                else { return Json(new { Mensaje = "El Modelo Es Invalido" }); }
+                    return Json(new { Mensaje = "Se Ha  Credado Correctamente El Servicio", Error=false });
+               
             }
             catch(Exception ex)
             {
-                return Json(new { Mensaje = "Ha Ocurrido Un Error: " + ex.Message });
+                return Json(new { Mensaje = "Ha Ocurrido Un Error: " + ex.Message, Error= true });
             }
             
         }
