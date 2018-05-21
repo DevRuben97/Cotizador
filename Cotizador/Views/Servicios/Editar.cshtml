@@ -1,0 +1,26 @@
+﻿@model Cotizador.Models.Servicios
+@{ 
+    if (ViewBag.Mensaje != null)
+    {
+        <label class="text-danger">@ViewBag.Mensaje</label>
+    }
+}
+<form id="Servicios">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        <label class="text-dark">Nombre</label>
+        <input type="text" placeholder="Ingresa El Nombre" id="nombre" name="nombre" class="form-control"value="@Model.nombre" />
+        @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        <label class="text-dark">Costo</label>
+        <input type="text" placeholder="Valor del Servicio" id="Costo" name="Costo" class="form-control" value="@Model.Costo" />
+        @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        <label class="text-dark">Descripción</label>
+        <textarea type="text" placeholder="Pequeña Descripción" rows="4" class="form-control" name="Descripcion" id="Descripcion" >@Model.Descripcion</textarea>
+        @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+    </div>
+</form>
+

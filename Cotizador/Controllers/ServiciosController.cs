@@ -46,30 +46,41 @@ namespace Cotizador.Controllers
                     {
                         if (orderDir.Equals("asc"))
                         {
-                            servicos = servicos.OrderBy(x => x.nombre).ToList();
+                            servicos = servicos.OrderBy(x => x.id).ToList();
                         }
                         else
                         {
-                            servicos = servicos.OrderByDescending(x => x.nombre).ToList();
+                            servicos = servicos.OrderByDescending(x => x.id).ToList();
                         }
                     }
                    else if (order.Equals("1"))
                     {
                         if (orderDir.Equals("asc"))
                         {
-                            servicos = servicos.OrderBy(x => x.Descripcion).ToList();
+                            servicos = servicos.OrderBy(x => x.nombre).ToList();
                         }
                         else 
                         {
-                            servicos = servicos.OrderByDescending(x => x.Descripcion).ToList();
+                            servicos = servicos.OrderByDescending(x => x.nombre).ToList();
                         }
                     }
                    else if (order.Equals("2"))
                     {
                         if (orderDir.Equals("asc"))
                         {
-                            servicos = servicos.OrderBy(x => x.Costo).ToList();
+                            servicos = servicos.OrderBy(x => x.Descripcion).ToList();
                         }     
+                        else
+                        {
+                            servicos = servicos.OrderByDescending(x => x.Descripcion).ToList();
+                        }
+                    }
+                   else if (order.Equals("3"))
+                    {
+                        if (orderDir.Equals("asc"))
+                        {
+                            servicos = servicos.OrderBy(x => x.Costo).ToList();
+                        }
                         else
                         {
                             servicos = servicos.OrderByDescending(x => x.Costo).ToList();
@@ -118,6 +129,64 @@ namespace Cotizador.Controllers
                 return Json(new { Mensaje = "Ha Ocurrido Un Error: " + ex.Message, Error= true });
             }
             
+        }
+        [HttpGet]
+        public PartialViewResult Editar(int id)
+        {
+            try
+            {
+                var servicio = context.servicio.Find(id);
+                return PartialView("Editar",servicio);
+
+            }
+            catch(Exception ex)
+            {
+                ViewBag.Mensaje ="Error: " + ex.Message;
+                return PartialView("Editar",null);
+            }
+        }
+        public JsonResult Editar(Models.Servicios servicios)
+        {
+            try
+            {
+                if (servicios== null)
+                {
+                    return Json(new { Mensaje = "Error Al Recibir los datos En El Servidor", Status = false });
+                }
+                else
+                {
+                    context.Entry(servicios).State = System.Data.Entity.EntityState.Modified;
+                    context.SaveChanges();
+                    return Json(new { Mensaje = "Se Ha Editado El Registro Correctamente", Status = true });
+                }
+            }
+            catch(Exception ex)
+            {
+                return Json(new { Mensaje = "Error: "+ ex.Message, Status = false });
+            }
+        }
+        [HttpPost]
+        public JsonResult Eliminar(int id)
+        {
+            try
+            {
+                var servicio = context.servicio.Find(id);
+                if (servicio == null)
+                {
+                    return Json(new { Mensaje = "El Servicio No Fue Encontrado, Intente Otra Vez.", Status = false });
+                }
+                else
+                {
+                    context.servicio.Remove(servicio);
+                    context.SaveChanges();
+                    return Json(new { Mensaje = "El Servicio Fue Eliminado Correctamente", Status = true });
+                }
+
+            }
+            catch( Exception ex)
+            {
+                return Json(new { Mensaje = "Error: " + ex.Message, Status = false });
+            }
         }
 
     }
