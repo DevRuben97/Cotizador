@@ -4,7 +4,7 @@
         <h1 class="text-center text-primary"><i class="fas fa-wrench"></i>Lista De Servicios</h1>
     </div>
     <div class="container-fluid">
-        <a class="btn btn-primary" data-toggle="modal" data-target="#ModalServicios" data-placement="top" onclick="FormServicio('@Url.Action("Nuevo","Servicios")')"><i class="fas fa-plus"></i> Agregar Servicio</a>
+        <a class="btn btn-primary" data-toggle="modal" data-target="#ModalServicios" data-placement="top" onclick="NuevoServicio('@Url.Action("Nuevo","Servicios")')"><i class="fas fa-plus"></i> Agregar Servicio</a>
     </div>
 <br />
     <div class="container-fluid">
@@ -36,7 +36,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary">
-                <h5 class="modal-title text-white" id="modaltitle">Modal title</h5>
+                <h5 class="modal-title text-white text-center" id="modaltitle">Modal title</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="CloseModal()">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -45,7 +45,7 @@
                 <h1 class="text-center">Cargando...</h1>
             </div>
             <div class="modal-footer" id="PieModal">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="CloseModal()" id="btnsecundary"> Cancelar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="CloseModal()" id="btnsecundary">Cancelar</button>
                 <button type="button" class="btn btn-primary" id="btnprimary">Guardar Cambios</button>
             </div>
         </div>
@@ -53,7 +53,7 @@
 </div>
 
  @section Scripts{
-     <script src="~/Scripts/MyScripts/Operations.js"></script>
+     <script src="~/Scripts/Operations/CrudServicios.js"></script>
     <script>
         SetTable('@Url.Action("GetServices", "Servicios")');
 </script>

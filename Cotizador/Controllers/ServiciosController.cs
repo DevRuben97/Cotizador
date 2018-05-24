@@ -145,6 +145,7 @@ namespace Cotizador.Controllers
                 return PartialView("Editar",null);
             }
         }
+        [HttpPost]
         public JsonResult Editar(Models.Servicios servicios)
         {
             try

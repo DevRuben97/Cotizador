@@ -9,11 +9,10 @@ var cancelar = $("#btnsecundary");
 var ModalIcon = $("#IconTitle");
 var servicios = $("#Table");
 
-function FormServicio(url) {
-    
+function NuevoServicio(url) {
     $(document).ready(function () {
 
-        encabezado.text(" Agregar Servicio");
+        encabezado.text("Agregar Servicio");
         Aceptar.text("Crear Servicio").show();
         cancelar.addClass("btn btn-danger").text("Cancelar");
         
@@ -27,36 +26,47 @@ function FormServicio(url) {
         Aceptar.click(function () {
 
             var form = $("#Servicios");
-            values = form.serializeArray();
+            if (ValidarServicio(form)) {
 
-            $.post(url, values, function (callback, status) {
+                Aceptar.text("Procesando..");
+                Aceptar.attr("disabled", true);
+                $("#btnLoanding").addClass("fas fa-sync fa-spin");
 
-                if (callback.Error == false) {
-                    swal({
-                        title: "Crear Servicio",
-                        text: callback.Mensaje,
-                        type: "success"
-                    });
-                    modal.modal("hide");
-                    
-                    
-                    
+                values = form.serializeArray();
 
-                }
-                else {
-                    swal({
-                        title: "Crear Servicio",
-                        text: callback.Mensaje,
-                        type: "warning"
-                    });
-                }
-            })
+
+                $.post(url, values, function (callback, status) {
+
+                    if (callback.Error == false) { // Controlar Los Errores del Servidor Error= false Ejecucion exitosa, sino Error.
+                        swal({
+                            title: "Crear Servicio",
+                            text: callback.Mensaje,
+                            type: "success"
+                        });
+                        CloseModal();
+                    }
+                    else {
+                        swal({
+                            title: "Crear Servicio",
+                            text: callback.Mensaje,
+                            type: "warning"
+                        });
+                        Aceptar.text("Agregar Servicio");
+                        Aceptar.attr("disabled", false);
+                    }
+                });
+            }
+            
         });
     });
 }
 function CloseModal() {
+
     Aceptar.show();
+    Aceptar.text("Agregar Servicio");
+    Aceptar.attr("disabled", false);
     cuerpo.html("<h1 class='text-center'>Cargando...</h1>");
+    ModalWindow.modal("hide");
 }
 function SetTable(ajaxUrl) {
 
@@ -91,7 +101,7 @@ function SetTable(ajaxUrl) {
             },
             "info": true,
             "columns": [
-                { title: "ID", "data":"id" },
+                { title: "ID", "data": "id" },
                 { title: "Nombre", "data": "nombre" },
                 { title: "Descripcición", "data": "Descripcion" },
                 { title: "Costo", "data": "Costo" },
@@ -101,7 +111,7 @@ function SetTable(ajaxUrl) {
             "columnDefs": [{
                 "targets": -1,
                 "data": null,
-                "defaultContent": "<button  class='btn btn-secondary' data-toggle='modal' data-target='#ModalServicios' data-placement='top' onclick='EditarServicio()'><i class='fas fa-edit'></i></button> " +
+                "defaultContent": "<a  class='btn btn-secondary' data-toggle='modal' data-target='#ModalServicios' data-placement='top' onclick='EditarServicio()'><i class='fas fa-edit'></i></a> " +
                 "|<button class='btn btn-danger' onclick='EliminarServicio()'><i class='fas fa-times-circle'><i/></button>"
             }
             ]
@@ -170,20 +180,88 @@ function EliminarServicio() {
 }
 function EditarServicio() {
 
-    this.encabezado.text("Editar Servicio");
-    this.Aceptar.text("Editar Servicio");
-    this.cancelar.addClass("btn btn-danger");
-
     $(document).ready(function () {
-        $("#Table tbody").on("click", "button", function () {
 
-            var data = servicios.row($(this).parent("tr")).data();
-            $.get("/Servicios/Editar/" + data.id, function (datos, status) {
+        encabezado.text("Editar Servicio");
+        Aceptar.text("Guardar Cambios");
+        cancelar.addClass("btn btn-danger");
 
-                this.cuerpo.html(datos);
+        $("#Table tbody").on("click", "a", function () {
+
+            var datos = servicios.row($(this).parents("tr")).data();
+            $.get("/Servicios/Editar/" + datos.id, function (backdata, status) {
+
+                cuerpo.html(backdata);
             });
         });
 
+        Aceptar.click(function () {
+
+            var form = $("#Servicios");
+
+            if (ValidarServicio(form)) {
+
+                Aceptar.text("Procesando..");
+                Aceptar.attr("disable", true);
+
+                var values = form.serializeArray();
+                $.post("Servicios/Editar", values, function (callback, status) {
+
+                    if (callback.Error == false) {
+
+                        swal({
+                            title: "Editar Servicio",
+                            text: callback.Mensaje,
+                            type: "success"
+                        });
+                        CloseModal();
+                    }
+                    else {
+                        swal({
+                            title: "Editar Servicio",
+                            text: callback.Mensaje,
+                            type: "error"
+                        });
+                        Aceptar.attr("disable", false);
+                        Aceptar.text("Guardar Cambios");
+                    }
+
+                });
+            }
+
+        })
+        
+
+    });
+
+}
+
+function ValidarServicio(form) {// Validar los Campos de Texto 
+
+    $(document).ready(function () {
+
+        var data = form.serializeArray();
+
+        if (data.nombre == null || data.nombre == "") {
+
+            $("#Vnombre").text("Tienes Que ingresar el nombre Del Servico").focus();
+            return false;
+        }
+        else if (data.Costo == null || isNaN(data.Costo) || data.Costo == "") {
+
+            $("#Vcosto").text("Tienes Que Imgresar El Costo del Servicio").focus();
+            return false;
+        }
+        else if (data.Descripcion == null || data.Descripcion == "") {
+
+            $("#Vdetalle").text("Tienes Que Ingresar Un Detalle Del Servicio").focus();
+            return false;
+        }
+        else {
+            return true;
+        }
+        
+  
     });
 
 }

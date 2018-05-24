@@ -23,6 +23,7 @@ namespace Cotizador.Models
             //Configuraciones Adicionales A La Tabla.
             modelBuilder.Entity<Cotizaciones>().Property(x => x.Total).HasPrecision(5, 3);
             modelBuilder.Entity<Servicios>().Property(x => x.Costo).HasPrecision(5, 3);
+            
 
             base.OnModelCreating(modelBuilder);
         }
