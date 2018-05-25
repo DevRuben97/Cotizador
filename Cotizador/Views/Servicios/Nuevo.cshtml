@@ -1,20 +1,19 @@
 ﻿@model Cotizador.Models.Servicios
 
 <form id="Servicios">
-    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
     <div class="form-group">
         <label class="text-dark">Nombre</label>
         <input type="text" placeholder="Ingresa El Nombre" id="nombre" name="nombre" class="form-control" />
-        <span class="text-danger" id="Vnombre"></span>
+        <span class="text-danger" id="Vnombre" name="nombre"></span>
     </div>
     <div class="form-group">
         <label class="text-dark">Costo</label>
         <input type="text" placeholder="Valor del Servicio" id="Costo" name="Costo" class="form-control"/>
-        <span class="text-danger" id="Vcosto"></span>
+        <span class="text-danger" id="Vcosto" name="Costo"></span>
     </div>
     <div class="form-group">
         <label class="text-dark">Descripción</label>
         <textarea type="text" placeholder="Pequeña Descripción" rows="4" class="form-control" name="Descripcion" id="Descripcion"></textarea>
-        <span class="text-danger" id="Vdetalles"></span>
+        <span class="text-danger" id="Vdetalles" name="Descripcion"></span>
     </div>
 </form>

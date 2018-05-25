@@ -362,6 +362,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\Operations\CrudClientes.js" />
     <Content Include="Scripts\Operations\CrudServicios.js" />
     <Content Include="Scripts\sweetalert2.all.js" />
     <Content Include="Web.config" />
@@ -372,6 +373,7 @@
     <Compile Include="Controllers\CotizadorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ServiciosController.cs" />
+    <Compile Include="Entitys\DataTable.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

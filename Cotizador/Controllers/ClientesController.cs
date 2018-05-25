@@ -4,38 +4,54 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.SqlClient;
+using Cotizador.Models;
+using Cotizador.Entitys;
 
 namespace Cotizador.Controllers
 {
     public class ClientesController : Controller
     {
-        Models.CotizadorContext context = new Models.CotizadorContext();
+        CotizadorContext context = new CotizadorContext();
 
         //Clientes Que Contiene El Sistema.
         public ActionResult Lista()
         {
-
-            var clientes = context.Database.SqlQuery<Models.Clientes>("select top 100 * from clientes").ToList();
-            return View(clientes);
-        }
-        [HttpGet]
-        public ActionResult Nuevo()
-        {
             return View();
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Nuevo(Models.Clientes Cliente)
+        public JsonResult GetClientes(DataTable data)//Obtener Todos Los 100 primeros clientes de la Base de Datos.
         {
-            if (ModelState.IsValid)
+            try
+            {
+                var val = "";
+
+
+                return Json(new { });
+            }
+            catch(Exception ex)
+            {
+                return Json(new { Error = ex.Message });
+            }
+        }
+        [HttpGet]
+        public PartialViewResult Nuevo()
+        {
+            return PartialView();
+        }
+        [HttpPost]
+        public JsonResult Nuevo(Clientes Cliente)
+        {
+
+            try
             {
                 context.cliente.Add(Cliente);
                 context.SaveChanges();
-                return RedirectToAction("Lista");
+                return Json(new { Mensaje = "El Cliente Fue Creado Correctamente", Error = false });
             }
-            return View();
-            
-
+            catch(Exception ex)
+            {
+                return Json(new { Mensaje = "A Ocurrido Un Error: " + ex.Message, Error = true });
+            }
            
         }
         [HttpGet]

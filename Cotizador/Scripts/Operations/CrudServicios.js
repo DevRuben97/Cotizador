@@ -30,7 +30,7 @@ function NuevoServicio(url) {
 
                 Aceptar.text("Procesando..");
                 Aceptar.attr("disabled", true);
-                $("#btnLoanding").addClass("fas fa-sync fa-spin");
+                
 
                 values = form.serializeArray();
 
@@ -238,30 +238,19 @@ function EditarServicio() {
 
 function ValidarServicio(form) {// Validar los Campos de Texto 
 
-    $(document).ready(function () {
+    var data = form.serializeArray();
+    var validate = false;
+    $(data).each(function (x) {
 
-        var data = form.serializeArray();
-
-        if (data.nombre == null || data.nombre == "") {
-
-            $("#Vnombre").text("Tienes Que ingresar el nombre Del Servico").focus();
-            return false;
-        }
-        else if (data.Costo == null || isNaN(data.Costo) || data.Costo == "") {
-
-            $("#Vcosto").text("Tienes Que Imgresar El Costo del Servicio").focus();
-            return false;
-        }
-        else if (data.Descripcion == null || data.Descripcion == "") {
-
-            $("#Vdetalle").text("Tienes Que Ingresar Un Detalle Del Servicio").focus();
-            return false;
+        if (data[x]["value"] == "") {
+            $("span[name='" + data[x]["name"] + "']").text("El Campo " + data[x]["name"] + " es Requerido");
+            validate = false;
         }
         else {
-            return true;
+            validate = true;
         }
-        
-  
     });
+
+    return validate;
 
 }

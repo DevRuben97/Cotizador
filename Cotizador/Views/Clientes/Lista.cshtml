@@ -8,115 +8,31 @@
 
 <div class="col-lg-2">
     <p>
-        <a class="btn btn-primary" href="Nuevo"><i class="fas fa-plus"></i> Agregar Cliente</a>
+        <a class="btn btn-primary" data-target="#ClientesModal" data-toggle="modal"><i class="fas fa-plus"></i> Agregar Cliente</a>
     </p>
 </div>
-<!--Mensaje De Aviso de Actividad Para El Usuario-->
-<div class="container-fluid" id="AlertBox">
-    <div class="row">
-        <div class="col-md-5">
-            <div class="alert alert-success alert-dismissible fade show" id="UserAlert">
-                <button class="close" data-dismiss="alert"><span>&times;</span></button>
-                <i class="fas fa-check"></i> El Registro fue Eliminado Correctamente
-            </div>
-        </div>
-    </div>
-</div>
+<!--Table-->
+<div class="container-fluid">
 
-<div class="col-md-12">
-    <div class="card">
-        <div class="card-header">
-            Lista de Clientes
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-3">
-                    <label>Buscar Cliente: </label>
-                    <button class="btn btn-primary" name="Buscar" id="btnbuscar"><i class="fas fa-search"></i></button>
-                    <input type="search" class="form-control" placeholder="Buscar Por Nombre" id="txtBuscar" name="Buscar" />
-                    <br />
-                </div>
-                <div class="col-md-5">
-                    <br />
-                    <br />
-                    <label>Mostrado Un Total de Registros: <strong>@Model.Count()</strong></label>
-                </div>
-            </div>
-            <table class="table">
-                <tr>
-                    <th>ID</th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.nombre)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.apellido)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.TipoCliente)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.TipoDNI)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.DNI)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.direccion)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.telefono)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.email)
-                    </th>
-                    <th>Acciones</th>
-                </tr>
+    <table class="table table-hover" id="Tclientes">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>TipoCliente</th>
+                <th>DNI</th>
+                <th>Dirección</th>
+                <th>telefono</th>
+                <th>Correo</th>
+                <th><strong>Acciones</strong></th>
+            </tr>
+        </thead>
+    </table>
 
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@item.id</td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.nombre)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.apellido)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TipoCliente)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TipoDNI)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DNI)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.direccion)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.telefono)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.email)
-                        </td>
-                        <td>
-                            <a class="btn btn-secondary" onclick="EditarCliente(@item.id)" data-toggle="modal" data-placement="#exampleModal" title="Editar" data-target="#exampleModal"><i class="fas fa-edit"></i></a>
-                            <a class="btn btn-danger" onclick="EliminarCliente(@item.id)" data-toggle="modal" data-target="#exampleModal" data-placement="top" title="Eliminar"><i class="fas fa-times-circle"></i></a>
-                            <a class="btn btn-info" onclick="MostrarDetalles(@item.id)" data-toggle="modal" data-target="#exampleModal" data-placement="top" title="Detalles"><i class="fas fa-info-circle"></i></a>
-                        </td>
-                    </tr>
-
-
-                }
-
-            </table>
-
-        </div>
-    </div>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="ClientesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -136,7 +52,13 @@
     </div>
 </div>
 <!--Script para buscar los datos utiliando ajax Jquery-->
-<script>
+@section Scripts{
+<script src="~/Scripts/Operations/CrudClientes.js"></script>    
+ <script>
+     InitializeTable('@Url.Action("GetClientes","Clientes")')
+    </script>
+}
+<!---<script>
     function MostrarDetalles(id) {
 
         $(document).ready(function () {
@@ -231,4 +153,4 @@
         $("#modalBody").html("<h1 class='text-center'>Cargando...</h1>");
 
     }
-</script>
+</script>-->
