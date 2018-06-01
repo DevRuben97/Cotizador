@@ -6,14 +6,32 @@ using System.Web;
 namespace Cotizador.Entitys
 {
     public class DataTable
-    { //Clase Entidad Que Contiene Todas las variables contenedoras del datatable.
-        public string[] search { get; set; }
-        public string draw { get; set; }
-        public string[][] order { get; set; }
-        public string[][] orderdir { get; set; }
-        public int starRec { get; set; }
-        public int pageSize { get; set; }
-        public int totalRecords { get; set; }
-        public int recordsFiltered { get; set; }
+    { //Clase Entidad Que Contiene Todas Los Parametros Que El Plugin datatable Necesita.
+        public int draw { get; set; }
+        public int length { get; set; }
+        public int start { get; set; }
+        public Searchs Search { get; set; }
+        public Order[] Order { get; set; }
+        public Columns[] Columns { get; set; }
     }
+    public class Columns
+    {
+        public string data { get; set; }
+        public string name { get; set; }
+        public bool searchable { get; set; }
+        public bool orderable { get; set; }
+        public Searchs search { get; set; }
+
+    }
+    public class Order
+    {
+        public string dir { get; set; }
+        public int column { get; set; }
+    }
+   public class Searchs
+    {
+        public string value { get; set; }
+        public bool regex { get; set; }
+    }
+
 }

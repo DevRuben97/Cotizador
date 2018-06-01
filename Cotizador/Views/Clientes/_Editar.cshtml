@@ -1,59 +1,88 @@
 ﻿@model Cotizador.Models.Clientes
 
-<div>
-    <p class="text-primary">Editando El Regitro de:<strong> @Model.nombre @Model.apellido</strong></p>
-</div>
-<br />
-<div class="container-fluid">
-  <form id="EditarCliente">
-      <div class="form-group">
-          <label for="nombre">Nombre *</label>
-          <input type="text" class="form-control" placeholder="Ingrese Un Nombre" id="nombre" name="nombre" value="@Model.nombre" />
-      </div>
-      <div class="form-group">
-          <label for="apellido">Apellido *</label>
-          <input type="text" class="form-control" placeholder="Ingrese Un Apellido" id="apellido" name="apellido" value="@Model.apellido"/>
-      </div>
-      <div class="form-group">
-          <label for="TipoCliente">Tipo De Cliente *</label>
-          @{
-                  string tipocliente = null;
-                  if (Model.TipoCliente == "Persona")
-                  {
-                      tipocliente = "Persona";
-                  }
-                  else { tipocliente = "Empresa"; }
-          <select class="form-control" name="TipoCliente" id="TipoCliente">
-              <option>Empresa</option>
-              <option>Persona</option>
-          </select>
-              }
-      </div>
-      <div class="form-group">
-          <label for="TipoDNI">Modo De Identificación: *</label>
-          <select class="form-control" name="TipoDNI" id="TipoDNI">
-              <option>CEDULA</option>
-              <option>PASAPOETE</option>
-              <option>RNC</option>
-              <option>OTRO</option>
-          </select>
-      </div>
-      <div class="form-group">
-          <label for="DNI">#Identificación: *</label>
-          <input type="text" class="form-control" placeholder="Ingrese Identificación" id="DNI" name="DNI" value="@Model.DNI"/>
-      </div>
-      <div class="form-group">
-          <label for="direccion">Dirección: *</label>
-          <input type="text" class="form-control" placeholder="Ingrese La Dirección" id="direccion" name="direccion" value="@Model.direccion"/>
-      </div>
-      <div class="form-group">
-          <label for="telefono">#Telefono: *</label>
-          <input type="text" class="form-control" placeholder="Ingrese El Telefono" id="telefono" name="telefono"  value="@Model.telefono"/>
-      </div>
-      <div class="form-group">
-          <label for="email">Correo Eletronico: *</label>
-          <input type="email" class="form-control" placeholder="Ingrese El Correo" id="email" name="email" value="@Model.email" />
-      </div>
-  </form>
-</div>
+<form id="FormClientes">
+    <div class="form-group">
+        <label for="nombre">Nombre *</label>
+        <input type="text" class="form-control" placeholder="Ingrese Un Nombre" id="nombre" name="nombre" value="@Model.nombre" />
+        <span name="nombre" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="apellido">Apellido *</label>
+        <input type="text" class="form-control" placeholder="Ingrese Un Apellido" id="apellido" name="apellido" value="@Model.apellido"/>
+        <span name="apellido" class="text-danger"></span>
+    </div>
+    @{
+        <div class="form-group">
+            <label for="TipoCliente">Tipo De Cliente *</label>
+            <select class="form-control" name="TipoCliente" id="TipoCliente">
+               @if (Model.TipoCliente== "Empresa")
+               {
+                   <option selected="selected">Empresa</option>
+                   <option>Persona</option>
+               }
+               else
+               {
+                <option>Empresa</option>
+                <option selected="selected">Persona</option>
+               }
+            </select>
+            <span name="TipoCliente" class="text-danger"></span>
+
+        </div>
+        <div class="form-group">
+            <label for="TipoDNI">Modo De Identificación: *</label>
+            <select class="form-control" name="TipoDNI" id="TipoDNI">
+                @switch (Model.TipoDNI)
+                {
+                    case "CEDULA":
+                        <option selected="selected">CEDULA</option>
+                        <option>PASAPOETE</option>
+                        <option>RNC</option>
+                        <option>OTRO</option>
+                        break;
+                    case "PASAPORTE":
+                        <option>CEDULA</option>
+                        <option selected="selected">PASAPOETE</option>
+                        <option>RNC</option>
+                        <option>OTRO</option>
+                        break;
+                    case "RNC":
+                        <option>CEDULA</option>
+                        <option>PASAPOETE</option>
+                        <option selected="selected">RNC</option>
+                        <option>OTRO</option>
+                        break;
+                    default:
+                        <option>CEDULA</option>
+                        <option>PASAPOETE</option>
+                        <option>RNC</option>
+                        <option selected="selected">OTRO</option>
+                        break;
+                }
+            </select>
+            <span name="TipoDNI" class="text-danger"></span>
+        </div>
+    }
+
+    <div class="form-group">
+        <label for="DNI">#Identificación: *</label>
+        <input type="text" class="form-control" placeholder="Ingrese Identificación" id="DNI" name="DNI" value="@Model.DNI"/>
+        <span name="DNI" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="direccion">Dirección: *</label>
+        <input type="text" class="form-control" placeholder="Ingrese La Dirección" id="direccion" name="direccion" value="@Model.direccion"/>
+
+    </div>
+    <div class="form-group">
+        <label for="telefono">#Telefono: *</label>
+        <input type="text" class="form-control" placeholder="Ingrese El Telefono" id="telefono" name="telefono" value="@Model.telefono"/>
+        <span name="telefono" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="email">Correo Eletronico: *</label>
+        <input type="email" class="form-control" placeholder="Ingrese El Correo" id="email" name="email" value="@Model.email"/>
+        <span name="email" class="text-danger"></span>
+    </div>
+</form>
 

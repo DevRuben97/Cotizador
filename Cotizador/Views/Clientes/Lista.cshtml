@@ -1,6 +1,4 @@
-﻿@model IEnumerable<Cotizador.Models.Clientes>
-
-@{
+﻿@{
     ViewBag.Title = "Lista De Clientes";
 }
 
@@ -8,7 +6,7 @@
 
 <div class="col-lg-2">
     <p>
-        <a class="btn btn-primary" data-target="#ClientesModal" data-toggle="modal"><i class="fas fa-plus"></i> Agregar Cliente</a>
+        <a class="btn btn-primary" data-target="#ClientesModal" data-toggle="modal" onclick="Nuevo()"><i class="fas fa-plus"></i> Agregar Cliente</a>
     </p>
 </div>
 <!--Table-->
@@ -35,9 +33,9 @@
 <div class="modal fade" id="ClientesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modaltitle">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="CloseModal()">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-light" id="modaltitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="CloseModal()" disabled>
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -58,99 +56,3 @@
      InitializeTable('@Url.Action("GetClientes","Clientes")')
     </script>
 }
-<!---<script>
-    function MostrarDetalles(id) {
-
-        $(document).ready(function () {
-            $("#modaltitle").text("Detalle Del Cliente:");
-            $("#btnprimary").hide();
-
-            $.get('@Url.Action("Detalles", "Clientes")' + "/" + id, function (data, status) {
-
-                $("#modalBody").html(data);
-            });
-        });
-    }
-    function EliminarCliente(id) {
-
-        $(document).ready(function () {
-            $("#modaltitle").text("Confirmar Eliminación:");
-            //Operacion de solicitud utilizando ajax
-            $("#btnprimary").text("Eliminar Cliente").addClass("btn btn-danger");
-
-
-            $.get('@Url.Action("Eliminar", "Clientes")' + "/" + id, function (data, status) {
-
-                $("#modalBody").html(data);
-
-            });
-
-            //Ejecutar la funcion de eliminado en caso de que se quiera eliminar.
-             $("#btnprimary").click(function () {
-
-                 var idcliente = $("#modelID").text();
-                 var datos = { id: idcliente };
-
-                $.post('@Url.Action("ConfDelete", "Clientes")' + "/", datos, function (back, status) {
-
-                    alert(back.Mensaje);
-                    $("#exampleModal").modal("hide");
-                    CloseModal();
-                    
-                    //location.reload(true);
-                });
-
-            });
-
-
-        });
-        
-
-    }
-    function EditarCliente(id) {
-        $(document).ready(function () {
-            $("#modaltitle").text("Editar Cliente");
-            $("#btnprimary").text("Guardar Cambios").addClass("btn btn-primary");
-            //Obtener el los datos del Cliente Para Ser Editados.
-            $.get('@Url.Action("Editar","Clientes")' + "/" + id, function (back, status) {
-
-                
-                $("#modalBody").html(back);
-                
-
-            });
-
-            $("#btnprimary").click(function () {
-                
-                if ($("#EditarCliente").submit(ValidarCliente) == true) {
-
-                    var url = '@Url.Action("Editar", "Clientes")' + "/";
-                    $.post();
-                }
-
-            });
-
-        });
-
-    }
-    function ValidarCliente() {
-        //Validar los datos introducidos por el Usuario.
-        $(":input").each(function () {
-
-            if ($(this).val() == null || $(this).val() == "") {
-
-                $(this).append("<label class='text-danger'>No Puedes Dejar Los Campos Vancios</label>");
-            }
-
-        });
-       
-        
-    }
-    function CloseModal() {
-        //Linpiar El Modal
-        
-        $("#btnprimary").show();
-        $("#modalBody").html("<h1 class='text-center'>Cargando...</h1>");
-
-    }
-</script>-->
