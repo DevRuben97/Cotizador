@@ -153,19 +153,6 @@ namespace Cotizador.Controllers
             }
             
         }
-        public PartialViewResult Detalles(int id )
-        {
-           
-                var cliente = context.cliente.Find(id);
-                if (cliente == null)
-                {
-                    ViewBag.Error = "No Se Pudo Encontrar Los Datos Requeridos";
-                }
-                return PartialView("_PDetalles", cliente);
-            
-           
-           
-        }
 
     }
 }

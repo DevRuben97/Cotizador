@@ -67,6 +67,7 @@ function CloseModal() {
     Aceptar.attr("disabled", false);
     cuerpo.html("<h1 class='text-center'>Cargando...</h1>");
     ModalWindow.modal("hide");
+    Table.ajax.reload();
 }
 function SetTable(ajaxUrl) {
 

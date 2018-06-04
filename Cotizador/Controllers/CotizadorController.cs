@@ -12,13 +12,21 @@ namespace Cotizador.Controllers
 
         public ActionResult Lista() // Lista de Contizaciones Hechas.
         {
-            var lista = context.Database.SqlQuery<Models.Cotizaciones>("select * from Cotizaciones").ToList();
-            return View(lista);
-        }
-        public ActionResult Cotizacion()
-        {
-
             return View();
+        }
+        [HttpPost]
+        public JsonResult GetCotizaciones()// Obtener Todas las Cotizaciones Del Sistema.
+        {
+            try
+            {
+
+                return Json(new { }, JsonRequestBehavior.AllowGet);
+            }
+            catch(Exception ex)
+            {
+                return Json(new { },JsonRequestBehavior.AllowGet);
+            }
+
         }
     }
 }

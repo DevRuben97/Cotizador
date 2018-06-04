@@ -98,7 +98,6 @@ function Nuevo() {
                             type: "success"
 
                         });
-                        Table.ajax.reload();
                         ModalClose();
                         
                     }
@@ -135,17 +134,17 @@ function Editar() {
             });
         });
 
-        Aceptar.click(function () {
+        Aceptar.on("click", function () {
 
             var form = $("#FormClientes");
 
-            if (ValidarServicio(form)) {
+            if (ValidarCliente(form)) {
 
                 Aceptar.text("Procesando..");
-                Aceptar.attr("disable", true);
+                Aceptar.attr("disabled", true);
 
                 var values = form.serializeArray();
-                $.post("Clientes/Editar", values, function (callback, status) {
+                $.post("/Clientes/Editar", values, function (callback, status) {
 
                     if (callback.Error == false) {
 
@@ -155,6 +154,8 @@ function Editar() {
                             type: "success"
                         });
                         CloseModal();
+                        Aceptar.attr("disabled", false);
+                        Aceptar.text("Guardar Cambios");
                     }
                     else {
                         swal({
@@ -162,14 +163,14 @@ function Editar() {
                             text: callback.Mensaje,
                             type: "error"
                         });
-                        Aceptar.attr("disable", false);
+                        Aceptar.attr("disabled", false);
                         Aceptar.text("Guardar Cambios");
                     }
 
                 });
             }
 
-        })
+        });
 
 
     });
@@ -208,7 +209,7 @@ function Eliminar() {
             }).then((result) => {
                 if (result.value) {
 
-                    if (result.value.Status) {
+                    if (result.value.Error == false) {
                         swal({
                             title: "Elimnado!",
                             text: "" + result.value.Mensaje,
