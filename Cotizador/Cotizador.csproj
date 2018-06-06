@@ -264,6 +264,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Images\Wallpepers\ElectricService.jpg" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -364,6 +365,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\Operations\CrudClientes.js" />
     <Content Include="Scripts\Operations\CrudServicios.js" />
+    <Content Include="Scripts\Operations\Login.js" />
     <Content Include="Scripts\sweetalert2.all.js" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -373,6 +375,7 @@
     <Compile Include="Controllers\CotizadorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ServiciosController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Entitys\DataTable.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -383,6 +386,7 @@
     <Compile Include="Models\CotizadorContext.cs" />
     <Compile Include="Models\DetalleCotizacion.cs" />
     <Compile Include="Models\Servicios.cs" />
+    <Compile Include="Models\Usuarios.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -405,6 +409,7 @@
     <Content Include="Views\Servicios\Nuevo.cshtml" />
     <Content Include="Views\Servicios\Editar.cshtml" />
     <Content Include="Views\Clientes\Nuevo.cshtml" />
+    <Content Include="Views\Users\Login.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -412,7 +417,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Images\Icons\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

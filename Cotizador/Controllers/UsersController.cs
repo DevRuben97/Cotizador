@@ -3,31 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Cotizador.Entitys;
 
 namespace Cotizador.Controllers
 {
-    public class CotizadorController : Controller
+    public class UsersController : Controller
     {
-        Models.CotizadorContext context = new Models.CotizadorContext();
-
-        public ActionResult Lista() // Lista de Contizaciones Hechas.
+       [HttpGet] 
+       public ViewResult Login()
         {
             return View();
         }
         [HttpPost]
-        public JsonResult GetCotizaciones(DataTable Table)// Obtener Todas las Cotizaciones Del Sistema.
+        public JsonResult Login(string usuario, string clave, bool remenber)
         {
             try
             {
-
                 return Json(new { }, JsonRequestBehavior.AllowGet);
             }
             catch(Exception ex)
             {
-                return Json(new { },JsonRequestBehavior.AllowGet);
+                return Json(new { }, JsonRequestBehavior.AllowGet);
             }
-
         }
     }
 }
