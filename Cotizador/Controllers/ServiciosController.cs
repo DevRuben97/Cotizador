@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace Cotizador.Controllers
 {
+    [Security.UserFilter()]
     public class ServiciosController : Controller
     {
         Models.CotizadorContext context = new Models.CotizadorContext();

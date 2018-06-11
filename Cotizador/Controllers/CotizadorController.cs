@@ -7,6 +7,7 @@ using Cotizador.Entitys;
 
 namespace Cotizador.Controllers
 {
+    [Security.UserFilter()]
     public class CotizadorController : Controller
     {
         Models.CotizadorContext context = new Models.CotizadorContext();
@@ -23,7 +24,7 @@ namespace Cotizador.Controllers
 
                 return Json(new { }, JsonRequestBehavior.AllowGet);
             }
-            catch(Exception ex)
+            catch
             {
                 return Json(new { },JsonRequestBehavior.AllowGet);
             }

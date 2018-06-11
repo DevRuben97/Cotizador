@@ -1,7 +1,10 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Pantalla Principal";
 }
 
 <h2 class="text text-center">@ViewBag.Title</h2>
-
+@{ 
+    var nombre = ViewBag.Nombre + " " + ViewBag.Apellido;
+<h3>Saludos: @nombre</h3>
+}

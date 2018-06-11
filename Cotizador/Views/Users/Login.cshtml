@@ -21,37 +21,34 @@
 </head>
 <body>
     <div class="container">
-        <div class="card mx-auto mt-5" style="width:400px; height:400px;">
-            <div class="card-body">
+        <div class="card mx-auto mt-5" style="width:400px; height:400px;" id="login-card">
+            <div class="card-body" id="card-login">
                 <h1 class="text-center"><i class="fas fa-user"></i> Iniciar Sesión</h1>
                 <form id="Login">
                     <div class="form-group">
                         <label>Usuario: </label>
-                        <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Ingrese Un Usuario" />
+                        <input type="text" class="form-control" id="Usuario" name="Usuario" placeholder="Ingrese Un Usuario" />
                     </div>
                     <div class="form-group">
                         <label>Contraseña: </label>
-                        <input type="password" class="form-control" id="clave" name="clave" placeholder="Ingrese Su Contraseña" />
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="remenber" name="remenber"  />
-                        <label for="remenber" class="form-check-label">Recordar Mi Usuario</label>
-                    </div>
-                    <div class="form-group">
-                        <br />
-                        <input type="button" class="btn btn-primary btn-lg btn-block" id="btnlogin" name="btnlogin" value="Iniciar Sesión"/>
-                        <br />
-                        <label class="text-danger"><strong id="ErrorText"></strong></label>
-                    </div>      
+                        <input type="password" class="form-control" id="Clave" name="Clave" placeholder="Ingrese Su Contraseña" />
+                    </div> 
                 </form>
+                <div class="form-group">
+                    <br />
+                    <button class="btn btn-primary btn-lg btn-block" id="btnlogin" value="Iniciar Sesión" onclick="UserLogin()">Iniciar Sesión</button>
+                    <br />
+                    <label class="text-danger" id="icon"><strong id="ErrorText"></strong></label>
+                </div>  
             </div>
         </div>
     </div>
     <!--Scripts-->
     <script src="~/Scripts/jquery-3.3.1.js"></script>
     <script src="~/Scripts/fontawesome-all.js"></script>
-    <script src="~/Scripts/Operations/Login.js"></script>
+    <script src="~/Scripts/jquery-ui.js"></script>
     <!--My Scripts-->
-    <script></script>
+    <script src="~/Scripts/Operations/UserSession.js"></script>
+    
 </body>
 </html>

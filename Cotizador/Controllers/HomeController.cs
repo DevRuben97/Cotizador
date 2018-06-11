@@ -10,8 +10,13 @@ namespace Cotizador.Controllers
     {
         //Controlador de Inicio de la Aplicación.
         // GET: Home
+        [Security.UserFilter()]
         public ActionResult Index()
         {
+            var datos = (Models.Usuarios)Session["UserInfo"];
+            ViewBag.User = datos.Usuario;
+            ViewBag.Nombre = datos.Nombre;
+            ViewBag.Apellido = datos.Apellido;
             return View();
         }
         

@@ -1,2 +1,2 @@
-﻿INSERT INTO Servicios(nombre, Descripcion, Costo)
-VALUES('InterCones', 'Reparacion de intercones Oficinas,Apar Etc', 3500)
+﻿insert into Usuarios(Nombre, Apellido, Telefono,Direccion, Usuario, Clave)
+values('Ruben','Batista Santos','849-650-9989','Alma Rosa || Calle 27 #9','Rbatista','BRILINKRT')

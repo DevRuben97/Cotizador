@@ -9,6 +9,7 @@ using Cotizador.Entitys;
 
 namespace Cotizador.Controllers
 {
+    [Security.UserFilter()]
     public class ClientesController : Controller
     {
         CotizadorContext context = new CotizadorContext();
