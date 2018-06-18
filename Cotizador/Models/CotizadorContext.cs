@@ -24,7 +24,8 @@ namespace Cotizador.Models
             //Configuraciones Adicionales A La Tabla.
             modelBuilder.Entity<Cotizaciones>().Property(x => x.Total).HasPrecision(5, 3);
             modelBuilder.Entity<Servicios>().Property(x => x.Costo).HasPrecision(5, 3);
-
+            modelBuilder.Entity<DetalleCotizacion>().Property(x => x.PrecioCotizacion).HasPrecision(5, 3);
+            
 
             //Configuracion De la Tabla Usuario
             modelBuilder.Entity<Usuarios>().HasKey(x => x.id);
@@ -34,6 +35,10 @@ namespace Cotizador.Models
             modelBuilder.Entity<Usuarios>().Property(x => x.Direccion).HasColumnType("varchar").HasMaxLength(50).IsRequired();
             modelBuilder.Entity<Usuarios>().Property(x => x.Usuario).HasColumnType("varchar").HasMaxLength(30).IsRequired();
             modelBuilder.Entity<Usuarios>().Property(x => x.Clave).HasColumnType("varchar").HasMaxLength(30).IsRequired();
+
+            //Configuracion de la tabla cotizaciones
+            modelBuilder.Entity<Cotizaciones>().Property(x => x.Fecha).HasColumnType("DateTime");
+            modelBuilder.Entity<Cotizaciones>().Property(x => x.Estado).HasColumnType("varchar").HasMaxLength(20).IsRequired();
 
             base.OnModelCreating(modelBuilder);
         }

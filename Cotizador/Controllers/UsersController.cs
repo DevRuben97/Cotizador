@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Cotizador.Models;
+using Cotizador.Entitys;
 
 namespace Cotizador.Controllers
 {
@@ -39,6 +40,7 @@ namespace Cotizador.Controllers
                 return Json(new {ErrorText= ex.Message, Error=true}, JsonRequestBehavior.AllowGet);
             }
         }
+        
         public ActionResult Logout()//Cerrar Sesion en el Sistema
         {
             Session["IsUserLogin"] = false;
@@ -46,7 +48,20 @@ namespace Cotizador.Controllers
 
             ViewBag.Mensaje = "Sesión Cerrada Correctamente";
 
-            return RedirectToAction("Users", "Login");
+            return RedirectToAction("Login", "Users");
+        }
+        [HttpPost]
+        public JsonResult GetAllUsers(DataTable Table)
+        {
+            try
+            {
+
+                return Json(new { }, JsonRequestBehavior.AllowGet);
+            }
+            catch(Exception ex)
+            {
+                return Json(new {Mensaje= ex.Message }, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }

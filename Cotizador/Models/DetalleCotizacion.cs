@@ -14,15 +14,9 @@ namespace Cotizador.Models
         public int idservicio { get; set; }
         public int idcotizacion { get; set; }
         [Required]
-        [StringLength(20)]
-        public string producto { get; set; }
-        [Required]
-        [StringLength(30)]
-        public string descripcion { get; set; }
-        [Required]
         public int cantidad { get; set; }
         [Required]
-        public decimal precioUnitario { get; set; }
+        public decimal PrecioCotizacion { get; set; }
         [ForeignKey("idservicio")]
         public Servicios Servicios { get; set; }
         [ForeignKey("idcotizacion")]

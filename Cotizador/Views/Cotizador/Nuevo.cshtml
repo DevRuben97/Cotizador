@@ -1,0 +1,68 @@
+﻿
+@{
+    ViewBag.Title = "Nueva Cotizacion";
+}
+<h2 class="text-primary text-center"><i class="fas fa-file-alt"></i> Nueva Cotización</h2>
+
+<div class="container">
+    <div class="card"><!--Contenedor de los Elementos-->
+        <div class="card-header">
+            <label class="text-center">Datos Del Cliente:</label> 
+        </div>
+        <div class="card-body">
+            <div class="row"><!--Filas Y Colummnas-->
+                <div class="col-lg-3">
+                    <label>Cliente: </label>
+                    <input type="text" class="form-control" id="BuscarCliente" placeholder="Ingrese Un Cliente"/>
+                </div>
+                <div class="col-lg-3">
+                    <label>Tipo De Cliente:</label>
+                    <select class="form-control" id="TipoCliente">
+                        <option value="Empresa">Empresa</option>
+                        <option value="Persona">Persona</option>
+                    </select>
+                </div>
+                <div class="col-lg-3">
+                    <label> Identificación:</label>
+                    <input type="text" class="form-control" id="NumIdentidad" placeholder="Identificación" readonly />
+                </div>
+                <div class="col-lg-3">
+                    <label> Telefono:</label>
+                    <input type="text" class="form-control" id="Telefono" placeholder="Telefono" readonly />
+                </div>
+            </div>
+            <div class="row"><!--Nueva Fila-->
+
+                <div class="col-lg-8">
+                    <label>Dirección: </label>
+                    <input type="text" class="form-control" id="Direccion" placeholder="Dirección" readonly/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Pantalla Modal-->
+<div class="modal fade" id="ClientesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-light" id="modaltitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="CloseModal()" disabled>
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <h1 class="text-center">Cargando...</h1>
+            </div>
+            <div class="modal-footer" id="PieModal">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="CloseModal()" id="btnsecundary"><i class="fas fa-times"></i> Cancelar</button>
+                <button type="button" class="btn btn-primary" id="btnprimary"><i class="fas fa-check"></i>Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+<script src="~/Scripts/Operations/Cotizaciones.js"></script>
+}

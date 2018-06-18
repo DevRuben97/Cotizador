@@ -1,45 +1,55 @@
-﻿@model IEnumerable<Cotizador.Models.Cotizaciones>
-
-@{
+﻿@{
     ViewBag.Title = "Lista de Cotizaciones";
 }
 
-<h2>Lista De Cotizaciones</h2>
+<h2 class="text-primary text-center"><I class="fas fa-file-alt"></I>Lista De Cotizaciones</h2>
+<div class="container-fluid">
+    <button class="btn btn-primary" onclick="CotrollerNuevo()" ><i class="fas fa-plus"></i> Nueva Cotizacion</button>
+    
+</div>
+<!--Cuadro de busqueda por fechas-->
+<div class="container-fluid">
+    <br />
+    <label class="text-primary">Buscar Entre Fechas:</label>
+    <div class="row">      
+        <div class="col-md-3">
+            <label>Desde: </label>
+            <input type="date" class="form-control" id="Date1" />
+        </div>
+        <div class="col-md-3">
+            <label>Hasta: </label>
+            <input type="date" class="form-control" id="Date2" />
+        </div>
+    </div>
+</div>
+<br />
+<div class="container-fluid">
+    <table class="table table-hover" id="Coti">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Fecha</th>
+                <th>Total</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.cliente.nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.iddetalle)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Total)
-        </th>
-        <th></th>
-    </tr>
+        </tbody>
+    </table>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.cliente.nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.iddetalle)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Total)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })
-        </td>
-    </tr>
+</div>
+
+@section Scripts{
+    <script src="~/Scripts/Operations/Cotizaciones.js"></script>
+<script>
+    MostrarTabla('@Url.Action("GetCotizaciones","Cotizador")');
+
+    function CotrollerNuevo() {
+        window.location.href = "/Cotizador/Nuevo";
+    }
+    </script>    
+    
 }
-
-</table>

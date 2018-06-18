@@ -13,6 +13,8 @@ namespace Cotizador.Models
         public int id { get; set; }
         public int idcliente { get; set; }
         public int iddetalle { get; set; }
+        public DateTime Fecha { get; set; }
+        public string Estado { get; set; }
         public decimal Total { get; set; }
         [Required]
         [ForeignKey("idcliente")]
