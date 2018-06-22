@@ -423,6 +423,7 @@
     <Content Include="Views\Servicios\Editar.cshtml" />
     <Content Include="Views\Clientes\Nuevo.cshtml" />
     <Content Include="Views\Users\Login.cshtml" />
+    <Content Include="Views\Cotizador\ListaServicios.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -17,10 +17,7 @@
                 </div>
                 <div class="col-lg-3">
                     <label>Tipo De Cliente:</label>
-                    <select class="form-control" id="TipoCliente">
-                        <option value="Empresa">Empresa</option>
-                        <option value="Persona">Persona</option>
-                    </select>
+                    <input type="text" class="form-control" id="TipoCliente" placeholder="Tipo Cliente" readonly/>
                 </div>
                 <div class="col-lg-3">
                     <label> Identificación:</label>
@@ -40,11 +37,51 @@
             </div>
         </div>
     </div>
+    <br /> <!--Seccion Para Agregar Productos O Servicios-->
+    <div class="card">
+        <div class="card-header">
+            <label>Datos Del Servicio: </label>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-2">
+                    <button class="btn btn-primary" data-target="#ServiciosModal" data-toggle="modal" onclick="VerServicios()"><i class="fas fa-plus"></i> Agregar Servicio</button>
+                </div>
+                <div class="col-lg-2">
+                    <button class="btn btn-danger" onclick="EliminarFila()"><i class="fas fa-times"></i> Eliminar Servicio</button>
+                </div>
+                <div class="col-lg-2">
+                    <button class="btn btn-secondary" onclick="GuardarCotizacion()"><i class="fas fa-check-circle"></i> Crear Cotizacion</button>
+                </div>
+                <div class="col-lg-2">
+                    <p class="text-lg-right"><strong id="Total">Total: </strong></p>
+                </div>
+            </div>
+            <br />
+            <div>
+                <table class="table table-hover" id="Cotizacion">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Cantidad</th>
+                            <th>Descripción</th>
+                            <th>Precio Unitario</th>
+                            <th>ITBIS</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+  
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!--Pantalla Modal-->
-<div class="modal fade" id="ClientesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal fade" id="ServiciosModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered " role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary">
                 <h5 class="modal-title text-light" id="modaltitle">Modal title</h5>
@@ -56,8 +93,8 @@
                 <h1 class="text-center">Cargando...</h1>
             </div>
             <div class="modal-footer" id="PieModal">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="CloseModal()" id="btnsecundary"><i class="fas fa-times"></i> Cancelar</button>
-                <button type="button" class="btn btn-primary" id="btnprimary"><i class="fas fa-check"></i>Guardar Cambios</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"  id="btnsecundary"><i class="fas fa-times"></i> Cancelar</button>
+                <button type="button" class="btn btn-primary" id="btnprimary" onclick="CloseModal()"><i class="fas fa-check"></i> Finalizar</button>
             </div>
         </div>
     </div>

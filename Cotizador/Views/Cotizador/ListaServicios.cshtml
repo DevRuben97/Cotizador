@@ -1,0 +1,91 @@
+﻿<h1 class="text-center">Lista de Servicios</h1>
+<br />
+<p class="text-primary">Seleccione El Servicio para Agregar</p>
+<table class="table table-hover" id="Table">
+    <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Descripcición
+            </th>
+            <th>
+                Costo
+            </th>
+
+        </tr>
+    </thead>
+</table> 
+<!--Script Inicializador-->
+<script src="~/Scripts/Operations/Cotizaciones.js"></script>
+<script> 
+    var table = $("#Table");
+    $(document).ready(function () {
+
+        table = table.DataTable({
+            "language": {
+                "search": "Buscar",
+                "searchPlaceholder": "Buscar Por Nombre",
+                "lengthMenu": "Mostrando _MENU_ Por Pagina",
+                "zeroRecords": "No Se Encontraron Registros",
+                "infoEmpty": "No Hay Registros Para Mostrar",
+                "info": "Mostrando Pagina _PAGE_ De _PAGES_",
+                "processing": "Cargando Datos, Espere..",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anteriror"
+                },
+                "infoFiltered": "Filtrado Desde _MAX_ Registros Totales"
+
+
+
+            },
+            "processing": true,
+            "serverSide": true,
+            "searching": true,
+            "ajax": {
+                "url": "/Servicios/GetServices/",
+                "type": "POST",
+                "datatype": "json",
+            },
+            "info": true,
+            "columns": [
+                { title: "ID", "data": "id" },
+                { title: "Nombre", "data": "nombre" },
+                { title: "Descripcición", "data": "Descripcion" },
+                { title: "Costo", "data": "Costo" }
+
+            ]
+
+        });
+        
+        $("#Table tbody").on("click", "tr", function () {
+
+            $("#Table tbody tr").each(function () {
+
+                if ($(this).hasClass("table-active")) {
+
+                    $(this).removeClass("table-active");
+                }
+            });
+
+            $(this).addClass("table-active");
+            $("#btnprimary").attr("disabled", false);
+
+            var datos = table.row(this).data();
+
+            SelectServicio(datos);
+            
+            });
+           
+
+        
+    });
+</script>
+

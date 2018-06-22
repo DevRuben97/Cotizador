@@ -10,7 +10,7 @@ namespace Cotizador.Security
     {
         //Variables Globales de la clase:
 
-        public string User { get; set; }
+        public string Role { get; set; }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
@@ -18,6 +18,7 @@ namespace Cotizador.Security
             {
                 filterContext.Result = new RedirectResult("/Users/Login");
             }
+           
             base.OnActionExecuting(filterContext);
         }
     }

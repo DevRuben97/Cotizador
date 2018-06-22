@@ -36,10 +36,14 @@ namespace Cotizador.Controllers
         {
             return View();
         }
-        public JsonResult Nuevo(string nombre)
+        [HttpPost]
+        public JsonResult Nuevo(Cotizaciones Cotiza, DetalleCotizacion[] detalle)
         {
             try
             {
+
+                
+
 
                 return Json(new {Mensaje= "La Cotizacion fue Creada Correctamente",Error= false }, JsonRequestBehavior.AllowGet);
             }
@@ -48,7 +52,6 @@ namespace Cotizador.Controllers
                 return Json(new {Mensaje= "Error Encontrado: "+ ex.Message, Error=true }, JsonRequestBehavior.AllowGet);
             }
         }
-        
         public JsonResult BuscarClientes(string search)
         {// Buscar los Clientes A Seleccionar, para la cotizacion.
             try
@@ -73,11 +76,14 @@ namespace Cotizador.Controllers
                 return Json(new {Clientes= error }, JsonRequestBehavior.AllowGet);
             }
         }
-        public JsonResult FillClientData(string nombre)
+        [HttpPost]
+        public JsonResult DatosCliente(string nombre)
         {
             try
             {
-                var cliente = context.cliente.Find(nombre);
+                var cliente = context.Database.SqlQuery<Clientes>("select * from Clientes where" +
+                    " nombre= @nombre", new System.Data.SqlClient.SqlParameter("@nombre", nombre)).ToArray()[0];
+
                 if (cliente != null)
                 {
                     return Json(new
@@ -86,19 +92,24 @@ namespace Cotizador.Controllers
                         dni = cliente.DNI,
                         phone = cliente.telefono,
                         direccion = cliente.direccion,
-                        Error=false
+                        Error = false
 
                     }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
-                    return Json(new { Error = true,Mensaje= "El Cliente No Fue Encontrado" });
+                    return Json(new { Error = true, Mensaje = "El Cliente No Fue Encontrado" });
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return Json(new { Error = true, Mensaje = "Error Encontrado: " + ex.Message });
             }
+        }
+        public PartialViewResult ListaServicios()
+        {
+
+            return PartialView();
         }
     }
 }
