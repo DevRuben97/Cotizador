@@ -22,8 +22,8 @@ namespace Cotizador.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             //Configuraciones Adicionales A La Tabla.
-            modelBuilder.Entity<Cotizaciones>().Property(x => x.Total).HasPrecision(5, 3);
-            modelBuilder.Entity<Servicios>().Property(x => x.Costo).HasPrecision(5, 3);
+            modelBuilder.Entity<Cotizaciones>().Property(x => x.Total).HasPrecision(18, 2);
+            modelBuilder.Entity<Servicios>().Property(x => x.Costo).HasPrecision(18, 2);
             modelBuilder.Entity<DetalleCotizacion>().Property(x => x.PrecioCotizacion).HasPrecision(5, 3);
             
 

@@ -92,6 +92,7 @@ namespace Cotizador.Controllers
                 int recFilter = servicos.Count();
                 servicos.Skip(startRec).Take(pageSize);
 
+
                 //Retornar Los Datos:
                 jsonResult = this.Json(new
                 {

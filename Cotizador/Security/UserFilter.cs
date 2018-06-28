@@ -20,6 +20,7 @@ namespace Cotizador.Security
             }
            
             base.OnActionExecuting(filterContext);
+            
         }
     }
 }

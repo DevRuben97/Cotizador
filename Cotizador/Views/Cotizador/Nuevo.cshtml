@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Nueva Cotizacion";
 }
 <h2 class="text-primary text-center"><i class="fas fa-file-alt"></i> Nueva Cotización</h2>
@@ -48,10 +47,10 @@
                     <button class="btn btn-primary" data-target="#ServiciosModal" data-toggle="modal" onclick="VerServicios()"><i class="fas fa-plus"></i> Agregar Servicio</button>
                 </div>
                 <div class="col-lg-2">
-                    <button class="btn btn-danger" onclick="EliminarFila()"><i class="fas fa-times"></i> Eliminar Servicio</button>
+                    <button class="btn btn-danger" onclick="EliminarFila()" id="DeleteRow" disabled><i class="fas fa-times"></i> Eliminar Servicio</button>
                 </div>
                 <div class="col-lg-2">
-                    <button class="btn btn-secondary" onclick="GuardarCotizacion()"><i class="fas fa-check-circle"></i> Crear Cotizacion</button>
+                    <button class="btn btn-secondary" onclick="GuardarCotizacion()" id="CreateCoti" disabled><i class="fas fa-check-circle"></i> Crear Cotizacion</button>
                 </div>
                 <div class="col-lg-2">
                     <p class="text-lg-right"><strong id="Total">Total: </strong></p>
@@ -67,7 +66,7 @@
                             <th>Descripción</th>
                             <th>Precio Unitario</th>
                             <th>ITBIS</th>
-                            <th>Total</th>
+                            <th id="total">Total</th>
                         </tr>
                     </thead>
                     <tbody>

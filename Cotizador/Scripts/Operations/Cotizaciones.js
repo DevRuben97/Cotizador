@@ -108,13 +108,14 @@ function GuardarCotizacion() {
 }
 function EliminarFila() {
 
+
     $("#Cotizacion tbody tr").each(function (x) {
 
         if ($(this).hasClass("table-active")) {
 
             $(this).remove();
         }
-
+        
     });
 
 }
@@ -175,6 +176,6 @@ $(document).ready(() => {
         $(this).addClass("table-active");
         
     });
-
+    
 });
  
