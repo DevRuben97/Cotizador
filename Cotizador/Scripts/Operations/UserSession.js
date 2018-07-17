@@ -24,6 +24,7 @@ function UserLogin() {
                             $("#login-card").effect("shake");
                         }
                         else {
+                           
                             window.location.href = "/home/Index";
                         }
                     }

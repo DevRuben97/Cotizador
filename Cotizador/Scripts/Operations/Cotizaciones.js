@@ -37,7 +37,7 @@ function MostrarTabla(url) {
             "info": true,
             "columns": [
                 { title: "ID", "data": "id" },
-                { title: "Cliente", "data": "Cliente" },
+                { title: "Cliente", "data": "cliente.nombre" },
                 { title: "Fecha", "data": "Fecha" },
                 { title: "Total", "data": "Total" },
                 { title: "Estado", "data": "Estado" },
@@ -48,7 +48,8 @@ function MostrarTabla(url) {
                 "targets": -1,
                 "data": null,
                 "defaultContent": "<a  class='btn btn-secondary' data-toggle='modal' data-target='#ModalServicios' data-placement='top' onclick='EditarServicio()'><i class='fas fa-edit'></i></a> " +
-                "|<button class='btn btn-danger' onclick='EliminarServicio()'><i class='fas fa-times-circle'><i/></button>"
+                "|<button class='btn btn-danger' onclick='EliminarServicio()'><i class='fas fa-times-circle'><i/></button>" +
+                "|<button class='btn btn-info' id='btnDetalle' onclick='VerDetalle()'><i class='fas fa-info-circle'></i></button>"
             }
             ]
 
@@ -87,22 +88,75 @@ function SelectServicio(datos) {
     $("#Cotizacion tbody").append("<tr><th>" + datos.id + "</th>" +
         "<th>1</th>" +
         "<th>" + datos.Descripcion + "</th>" +
-        "<th>" +"$"+ datos.Costo + "</th>" +
-        "<th>" + "$" + itbis + "</th >" +
-        "<th>" + "$" + datos.Costo + "</th ></tr > ");
+        "<th>" + datos.Costo + "</th>" +
+        "<th>" + itbis + "</th >" +
+        "<th>" + datos.Costo + "</th ></tr > ");
 
-    TotalCotizacion = TotalCotizacion + datos.Costo;
+    TotalCotizacion += datos.Costo;
     $("#Total").text("Total: RD: $" + TotalCotizacion);
+    $("#CreateCoti").attr("disabled", false);
     
    
 }
-function GuardarCotizacion() {
+function GuardarCotizacion() {//Guardar la Cotizacion Hecha.
 
     var date = new Date();
+    var Detalles = [];
+    
 
-    var fecha = date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear();
-    var estado = "REALIZADO";
-    var idcliente = $("#IdCliente").val();
+    //Obtener todos los datos requeridos:
+
+    var fecha = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+    var client = $("#BuscarCliente").val();
+
+    $("#Cotizacion tbody tr").each(function (x) {
+
+        var Items = $(this).children("th").toArray();
+
+        var DetailItem = {};
+
+        DetailItem.idservicio = Number.parseInt(Items[0].textContent);
+        DetailItem.cantidad = Number.parseInt(Items[1].textContent);
+        DetailItem.PrecioCotizacion = Number.parseFloat(Items[5].textContent);
+
+        Detalles.push(DetailItem);
+
+    });
+
+    var data = { Ncliente: client, Fecha: fecha, Total: TotalCotizacion, Detalle: Detalles };
+    
+    
+    //Enviar Los Datos Obtenidos
+
+    $.ajax({
+        url: "/Cotizador/Nuevo/",
+        method: "post",
+        dataType: "json",
+        data: data,
+        success: function (CallBack) {
+
+            if (CallBack.Error == false) {
+                swal({
+                    title: "Crear Cotización",
+                    text: CallBack.Mensaje,
+                    type: "success"
+                });
+                
+            }
+            else {
+                swal({
+                    title: "Crear Cotización",
+                    text: CallBack.Mensaje,
+                    type: "error"
+                });
+            }
+
+        }
+
+
+    });
+
+
 
 
 }
@@ -113,10 +167,19 @@ function EliminarFila() {
 
         if ($(this).hasClass("table-active")) {
 
+            var Money = Number.parseInt($(this).children("th").toArray()[5].textContent);
+            TotalCotizacion = TotalCotizacion- Money;
+            $("#Total").text("Total: RD: $" + TotalCotizacion);
             $(this).remove();
+            
         }
         
+        
     });
+    if ($("#Cotizacion tbody").children("tr").length <= 0) {
+
+        $("#CreateCoti").attr("disabled", true);
+    }
 
 }
 //Configuraciones Inicial al Cargar El View

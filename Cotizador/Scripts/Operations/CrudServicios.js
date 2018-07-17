@@ -105,7 +105,7 @@ function SetTable(ajaxUrl) {
                 { title: "ID", "data": "id" },
                 { title: "Nombre", "data": "nombre" },
                 { title: "Descripcición", "data": "Descripcion" },
-                { title: "Costo", "data": "Costo" },
+                { title: "Costo", "data": "Costo", "type": "num-fmt"},
                 { title: "Acciones", "data": null }
 
             ],

@@ -11,9 +11,14 @@ namespace Cotizador.Controllers
     public class UsersController : Controller
     {
         CotizadorContext db = new CotizadorContext();
+        
        [HttpGet] 
-       public ViewResult Login()
+       public ActionResult Login()
         {
+            if (Session["IsUserLogin"]!= null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
         [HttpPost]
@@ -21,13 +26,14 @@ namespace Cotizador.Controllers
         {
             try
             {
-                var Usuarios = db.Usuario.ToList().Where(x => x.Usuario.Equals(User.Usuario) && x.Clave.Equals(User.Clave)).ToArray();
+                var Usuarios = db.Usuario.ToList().Where(x => x.Usuario.Equals(User.Usuario) && x.Clave.Equals(User.Clave)).First();
 
-                if (Usuarios[0] != null)
+                if (Usuarios != null)
                 {
                     Session["IsUserLogin"] = true;
-                    Session["UserInfo"] = Usuarios[0];
-                    return Json(new { Error = false }, JsonRequestBehavior.AllowGet);
+                    Session["UserInfo"] = Usuarios;
+                    
+                    return Json(new { Error = false, Usuario= Usuarios.Nombre }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {

@@ -12,13 +12,14 @@ namespace Cotizador.Models
         [Key]
         public int id { get; set; }
         public int idcliente { get; set; }
-        public DateTime Fecha { get; set; }
+        public string Fecha { get; set; }
         public string Estado { get; set; }
         public decimal Total { get; set; }
-        [Required]
+
+        //Llaves foraneas y propiedades de navegacion.
         [ForeignKey("idcliente")]
         public Clientes cliente { get; set; }
-        [Required]
+
         public List<DetalleCotizacion> Detalles { get; set; }
     }
 }
