@@ -42,6 +42,27 @@
 
 </div>
 
+<!--Pantalla Modal-->
+<div class="modal fade" id="CotizacionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered " role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-light" id="modaltitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="CloseModal()" disabled>
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <h1 class="text-center">Cargando...</h1>
+            </div>
+            <div class="modal-footer" id="PieModal">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnsecundary"><i class="fas fa-times"></i> Cancelar</button>
+                <button type="button" class="btn btn-primary" id="btnprimary" onclick="CloseModal()"><i class="fas fa-check"></i> Finalizar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts{
     <script src="~/Scripts/Operations/Cotizaciones.js"></script>
 <script>

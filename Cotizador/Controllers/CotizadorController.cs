@@ -6,6 +6,9 @@ using System.Web.Mvc;
 using Cotizador.Entitys;
 using Cotizador.Models;
 using System.Data.Entity;
+using Microsoft.Reporting.WebForms;
+using System.IO;
+
 
 namespace Cotizador.Controllers
 {
@@ -18,9 +21,13 @@ namespace Cotizador.Controllers
         {
             return View();
         }
-        public PartialViewResult Detalle()
+        [HttpGet]
+        public PartialViewResult Detalle(int CotID)//Devolver el detalle correspondiente 
         {
-            return PartialView();
+
+            var detalle = context.detalleCoti.Where(x => x.idcotizacion.Equals(CotID))
+                .Include(c => c.Servicios).ToList();
+            return PartialView(detalle);
         }
         [HttpPost]
         public JsonResult GetCotizaciones(DataTable Table)// Obtener Todas las Cotizaciones Del Sistema.
@@ -45,15 +52,15 @@ namespace Cotizador.Controllers
                             cotizador.OrderBy(x => x.id).ToList() : cotizador.OrderByDescending(x => x.id).ToList();
                         break;
                     case 1:
-                        cotizador = (Table.Order[0].dir.Equals("asc")) ?
+                        cotizador = (Table.Order[1].dir.Equals("asc")) ?
                              cotizador.OrderBy(x => x.cliente.nombre).ToList() : cotizador.OrderByDescending(x => x.cliente.nombre).ToList();
                         break;
                     case 3:
-                        cotizador = (Table.Order[0].dir.Equals("asc")) ?
+                        cotizador = (Table.Order[2].dir.Equals("asc")) ?
                             cotizador.OrderBy(x => x.Fecha).ToList() : cotizador.OrderByDescending(x => x.Fecha).ToList();
                         break;
                     case 4:
-                        cotizador = (Table.Order[0].dir.Equals("asc")) ?
+                        cotizador = (Table.Order[3].dir.Equals("asc")) ?
                             cotizador.OrderBy(x => x.Total).ToList() : cotizador.OrderByDescending(x => x.Total).ToList();
                         break;
 
@@ -192,6 +199,73 @@ namespace Cotizador.Controllers
         {
 
             return PartialView();
+        }
+        [HttpPost]
+        public JsonResult Anular(int Id)
+        {
+            try
+            {
+                var model = context.cotizacion.Where(x => x.id == Id).First();
+                if(model!= null)
+                {
+                    model.Estado = "ANULADO";
+                    context.Entry(model).State = EntityState.Modified;
+                    context.SaveChanges();
+                    return Json(new { Mensaje = "Se Anulo la Cotización correctamente", Error = false }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(new { Mensaje = "No se Encontro la Cotización Seleccionada", Error = true }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch(Exception ex)
+            {
+                return Json(new { Mensaje = "Error Encontrado: "+ ex.Message, Error = true }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpGet]
+        public ActionResult Report(int id)// Devolver el pdf del Reporte de Cotizacion.
+        {
+            LocalReport report = new LocalReport();
+            List<Entitys.ReportCotizacion> DataLists = new List<ReportCotizacion>();
+            string path = Path.Combine(Server.MapPath("~/Reports"), "Coti.rdlc");
+
+            if (System.IO.File.Exists(path))
+            {
+                report.ReportPath = path;
+            }
+            else
+            {
+                return RedirectToAction("Lista");
+            }
+            //Solicitar los datos al servidor por medio de un procedimiento almacenado
+            DataLists = context.Database.SqlQuery<ReportCotizacion>("EXEC ReportCotizacion @idcotizacion",
+               new System.Data.SqlClient.SqlParameter("@idcotizacion", id)).ToList();
+
+           ReportDataSource dataSource = new ReportDataSource("CotiData", DataLists);
+           var parameter = new ReportParameter("Impuesto", Convert.ToString((DataLists[0].Total * 0.18m)),true);
+           report.DataSources.Add(dataSource);
+           //report.SetParameters(parameter);
+            
+
+            string reportType = "PDF";
+            string mimeType;
+            string encoding;
+            string fileNameExtension= "pdf";
+            Warning[] warnings;
+            string[] streams;
+            byte[] renderedBytes;
+
+            renderedBytes = report.Render(
+                reportType,
+                "",
+                out mimeType,
+                out encoding,
+                out fileNameExtension,
+                out streams,
+                out warnings);
+
+            return File(renderedBytes, "application/pdf","Cotizacion-" + DataLists[0].Fecha+".pdf");
         }
     }
 }

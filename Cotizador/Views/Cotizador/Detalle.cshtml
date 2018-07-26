@@ -1,0 +1,37 @@
+﻿
+<!--View para mostrar el Detalle De la Cotizacion-->
+@model IEnumerable<Cotizador.Models.DetalleCotizacion>
+<h1 class="text-center">Detalle de Cotizacion</h1>
+<br />
+<p class="text-primary">Todos Los Detalles Correpondiente a esta Cotización</p>
+<table class="table table-hover" id="Table">
+    <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Servicio
+            </th>
+            <th>
+                Cantidad
+            </th>
+            <th>
+                Costo
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+       @foreach(var item in Model)
+       {
+           <tr>
+               <th>@item.id</th>
+               <th>@item.Servicios.nombre</th>
+               <th>@item.cantidad</th>
+               <th>@item.PrecioCotizacion</th>
+           </tr>
+       }
+
+    </tbody>
+</table>

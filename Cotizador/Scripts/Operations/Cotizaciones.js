@@ -47,16 +47,17 @@ function MostrarTabla(url) {
             "columnDefs": [{
                 "targets": -1,
                 "data": null,
-                "defaultContent": "<a  class='btn btn-secondary' data-toggle='modal' data-target='#ModalServicios' data-placement='top' onclick='EditarServicio()'><i class='fas fa-edit'></i></a> " +
-                "|<button class='btn btn-danger' onclick='EliminarServicio()'><i class='fas fa-times-circle'><i/></button>" +
-                "|<button class='btn btn-info' id='btnDetalle' onclick='VerDetalle()'><i class='fas fa-info-circle'></i></button>"
+                "defaultContent": "<a  class='btn btn-primary' id='btnPrint' onclick='PrintCotizacion()'><i class='fas fa-print'></i></a> " +
+                "|<button class='btn btn-danger' onclick='AnularCotizacion()'><i class='fas fa-times-circle'></i></button>" +
+                "| <button class='btn btn-info' id='btnDetalle' data-target='#CotizacionModal' data-toggle='modal' onclick='VerDetalle()'><i class='fas fa-info-circle'></i></button>"
             }
             ]
+           
 
         });
     });
 }
-function VerServicios() {
+function VerServicios() { // Mostrar el Html Devuelto por el servidor en el modal
     $(document).ready(function () {
 
         $("#modaltitle").text("Seleccionar Servicios");
@@ -141,6 +142,7 @@ function GuardarCotizacion() {//Guardar la Cotizacion Hecha.
                     text: CallBack.Mensaje,
                     type: "success"
                 });
+                LinpiarForms();
                 
             }
             else {
@@ -182,6 +184,77 @@ function EliminarFila() {
     }
 
 }
+function VerDetalle() {
+
+    $(document).ready(function () {
+
+    //Obtener el id de la cotizacion
+
+        $("#modaltitle").text("Detalle de la Cotización");
+        $("#btnprimary").text("Aceptar");
+        $("#btnsecundary").text("Cerrar");
+
+    $("#Coti tbody").on("click", "#btnDetalle", function () {
+
+        
+        var datos = table.row($(this).parents("tr")).data();
+        var idcot = datos.id;
+
+        //Realizar la peticion Ajax al Servidor
+        $.ajax({
+            url: "/Cotizador/Detalle/",
+            data: { CotID: idcot },
+            success: function (data) {
+
+                $("#modalBody").html(data);
+            }
+        });
+
+    });
+
+   
+
+    });
+}
+function AnularCotizacion() {
+
+
+}
+function PrintCotizacion() {
+
+    $(document).ready(function () {
+
+        var idCotizacion = 0;
+        $("#Coti tbody").on("click", "#btnPrint", function () {
+
+            //Obtener el id de la tabla seleccionada.
+            var datos = table.row($(this).parents("tr")).data();
+            idCotizacion = datos.id;
+
+            window.location.href = "/Cotizador/Report?id= " + datos.id;
+
+        });
+
+    });
+
+}
+function LinpiarForms() {//Linpiar el formulario por completo
+
+
+    $("#NumIdentidad").clearFields();
+    $("#Telefono").clearFields();
+    $("#Direccion").clearFields();
+    $("#TipoCliente").clearFields();
+    $("#Cotizacion tbody tr").each((x) => {
+
+        $(this).remove();
+    });
+    TotalCotizacion = 0;
+    $("#Total").text("Total:");
+    $("#DeleteRow").attr("disabled", true);
+    $("#CreateCoti").attr("disabled", true);
+}
+
 //Configuraciones Inicial al Cargar El View
 //Buscar Los Clientes Segun la Sugerencia de la Base De Datos
 $(document).ready(() => {
