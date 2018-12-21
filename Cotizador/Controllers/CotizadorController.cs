@@ -39,9 +39,10 @@ namespace Cotizador.Controllers
                 int RecordsFiltered;
                 
                 //Buscar Datos:
-                if (!string.IsNullOrEmpty(Table.Search.value))
-                {
-                    
+                if (!string.IsNullOrEmpty(Table.Search.value)){
+
+                 
+
                 }
 
                 //Ordenando los datos
@@ -211,6 +212,7 @@ namespace Cotizador.Controllers
                     model.Estado = "ANULADO";
                     context.Entry(model).State = EntityState.Modified;
                     context.SaveChanges();
+                    
                     return Json(new { Mensaje = "Se Anulo la Cotización correctamente", Error = false }, JsonRequestBehavior.AllowGet);
                 }
                 else

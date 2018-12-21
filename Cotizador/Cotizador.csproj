@@ -518,7 +518,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Reports\Coti.rdlc" />
-    <EmbeddedResource Include="Reports\Cotizacion.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

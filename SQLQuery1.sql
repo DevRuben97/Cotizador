@@ -1,3 +1,1 @@
-﻿delete from Cotizaciones
-
-select * from DetalleCotizacions
+﻿select * from Usuarios
