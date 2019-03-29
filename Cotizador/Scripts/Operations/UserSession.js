@@ -63,5 +63,9 @@ $(document).ready(function () {
     });
     $("#Clave").focus(function () {
         $("span[name='Clave']").text("");
-    });
+    }).keypress(function (key) {
+        if (key.keyCode == 13) {
+            UserLogin();
+        }
+    })
 })

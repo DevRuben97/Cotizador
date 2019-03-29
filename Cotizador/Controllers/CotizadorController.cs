@@ -34,17 +34,24 @@ namespace Cotizador.Controllers
         {
             try
             {
-                var cotizador = context.cotizacion.Include(l => l.cliente).ToList();
-                int TotalRecords = cotizador.Count();
+                var cotizador = new List<Cotizaciones>();
+                int TotalRecords;
                 int RecordsFiltered;
                 
                 //Buscar Datos:
                 if (!string.IsNullOrEmpty(Table.Search.value)){
 
-                 
-
+                    var fechas = Table.Search.value.Split('/');
+                    var Desde = Convert.ToDateTime(fechas[0]);
+                    var Hasta = Convert.ToDateTime(fechas[1]);
+                    cotizador = context.cotizacion.Where(x => x.Fecha>= Desde && x.Fecha <=Hasta.Date)
+                        .Include(x => x.cliente).ToList();
                 }
-
+                else
+                {
+                    cotizador= context.cotizacion.Include(l => l.cliente).ToList();
+                }
+                TotalRecords = cotizador.Count();
                 //Ordenando los datos
                 switch (Table.Order[0].column)
                 {
@@ -77,9 +84,16 @@ namespace Cotizador.Controllers
                     data =cotizador
                 }, JsonRequestBehavior.AllowGet);
             }
-            catch
+            catch(Exception ex)
             {
-                return Json(new { },JsonRequestBehavior.AllowGet);
+                var errorList = new List<Cotizaciones>();
+                return Json(new
+                {
+                    draw = Table.draw,
+                    recordsTotal = errorList.Count,
+                    recordsFiltered = errorList.Count,
+                    data = errorList
+                }, JsonRequestBehavior.AllowGet);
             }
 
         }
@@ -100,11 +114,16 @@ namespace Cotizador.Controllers
 
                 if (Client!= null)
                 {
+                    //Obtener la fecha de la cotizacion convirtiendo el string en un datetime.
+                    var dateData = Fecha.Split('/');
+                    DateTime Date = new DateTime(Convert.ToInt32(dateData[2]),
+                        Convert.ToInt32(dateData[1]), Convert.ToInt32(dateData[0]));
+
                     Cotizaciones cotizador = new Cotizaciones
                     {
                         idcliente = Client.id,
                         Total = Total,
-                        Fecha = Fecha,
+                        Fecha = Date,
                         Estado = "REALIZADO"
                         
                     };

@@ -37,7 +37,7 @@ namespace Cotizador.Models
             modelBuilder.Entity<Usuarios>().Property(x => x.Clave).HasColumnType("varchar").HasMaxLength(30).IsRequired();
 
             //Configuracion de la tabla cotizaciones
-            modelBuilder.Entity<Cotizaciones>().Property(x => x.Fecha).HasColumnType("varchar").HasMaxLength(12);
+            modelBuilder.Entity<Cotizaciones>().Property(x => x.Fecha).HasColumnType("date");
             modelBuilder.Entity<Cotizaciones>().Property(x => x.Estado).HasColumnType("varchar").HasMaxLength(20).IsRequired();
 
             //Cofiguracion de la tabla Detalle Cotizacion

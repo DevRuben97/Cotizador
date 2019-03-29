@@ -26,7 +26,6 @@ function MostrarTabla(url) {
 
 
             },
-            "searching": false,
             "processing": true,
             "serverSide": true,
             "ajax": {
@@ -38,8 +37,16 @@ function MostrarTabla(url) {
             "columns": [
                 { title: "ID", "data": "id" },
                 { title: "Cliente", "data": "cliente.nombre" },
-                { title: "Fecha", "data": "Fecha" },
-                { title: "Total", "data": "Total" },
+                {
+                    title: "Fecha", "data": "FormatedDate", "render": function (data) {
+                        return data
+                    }
+                },
+                {
+                    title: "Total", "data": "Total", "render": function (data) {
+                        return `$${Intl.NumberFormat().format(data)}`;
+                    }
+                },
                 { title: "Estado", "data": "Estado" },
                 { title: "Acciones", "data": null }
 
@@ -51,11 +58,25 @@ function MostrarTabla(url) {
                 "|<button class='btn btn-danger' onclick='AnularCotizacion()'><i class='fas fa-times-circle'></i></button>" +
                 "| <button class='btn btn-info' id='btnDetalle' data-target='#CotizacionModal' data-toggle='modal' onclick='VerDetalle()'><i class='fas fa-info-circle'></i></button>"
             }
-            ]
+            ],
+            "initComplete": function () {
+                console.log("Los datos de las cotizaciones fueron cargadas correctamente");
+            }
            
 
         });
+
+        $("#Coti_filter").html("");
+        $("#Date2").change(SearchByDate)
     });
+
+
+}
+function SearchByDate() {
+    var date1 = $("#Date1").val();
+    var date2 = $("#Date2").val();
+
+    table.search(`${date1}/${date2}`).draw();
 }
 function VerServicios() { // Mostrar el Html Devuelto por el servidor en el modal
     $(document).ready(function () {
@@ -89,12 +110,12 @@ function SelectServicio(datos) {
     $("#Cotizacion tbody").append("<tr><th>" + datos.id + "</th>" +
         "<th>1</th>" +
         "<th>" + datos.Descripcion + "</th>" +
-        "<th>" + datos.Costo + "</th>" +
-        "<th>" + itbis + "</th >" +
-        "<th>" + datos.Costo + "</th ></tr > ");
+        "<th>" + Intl.NumberFormat().format(datos.Costo) + "</th>" +
+        "<th> $" + Intl.NumberFormat().format(itbis) + "</th >" +
+        "<th> $" + Intl.NumberFormat().format((datos.Costo + itbis)) + "</th ></tr > ");
 
-    TotalCotizacion += datos.Costo;
-    $("#Total").text("Total: RD: $" + TotalCotizacion);
+    TotalCotizacion += (datos.Costo + itbis);
+    $("#Total").text("Total: RD: $" + Intl.NumberFormat().format(TotalCotizacion));
     $("#CreateCoti").attr("disabled", false);
     
    
@@ -141,8 +162,11 @@ function GuardarCotizacion() {//Guardar la Cotizacion Hecha.
                     title: "Crear Cotización",
                     text: CallBack.Mensaje,
                     type: "success"
-                });
-                LinpiarForms();
+                }).then(function () {
+                    window.location.href = "/Cotizador/Lista";
+                })
+                
+
                 
             }
             else {
