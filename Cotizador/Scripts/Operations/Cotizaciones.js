@@ -39,7 +39,12 @@ function MostrarTabla(url) {
                 { title: "Cliente", "data": "cliente.nombre" },
                 {
                     title: "Fecha", "data": "FormatedDate", "render": function (data) {
-                        return data
+                        return data;
+                    }
+                },
+                {
+                    title: "Expiración", "data": "FormatedExpiracion", "render": function (data) {
+                        return data;
                     }
                 },
                 {
@@ -157,7 +162,7 @@ function GuardarCotizacion() {//Guardar la Cotizacion Hecha.
         data: data,
         success: function (CallBack) {
 
-            if (CallBack.Error == false) {
+            if (CallBack.Error === false) {
                 swal({
                     title: "Crear Cotización",
                     text: CallBack.Mensaje,
@@ -305,7 +310,7 @@ $(document).ready(() => {
                 method: "post",
                 success: function (data) {
 
-                    if (data.Error != true) {
+                    if (data.Error !== true) {
 
                         $("#NumIdentidad").val(data.dni);
                         $("#Telefono").val(data.phone);

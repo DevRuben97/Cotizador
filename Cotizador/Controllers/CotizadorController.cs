@@ -49,7 +49,7 @@ namespace Cotizador.Controllers
                 }
                 else
                 {
-                    cotizador= context.cotizacion.Include(l => l.cliente).ToList();
+                    cotizador = context.cotizacion.Include(l => l.cliente).Where(x => x.Expiracion.Date.Equals(DateTime.Now.Date) != true).ToList();
                 }
                 TotalRecords = cotizador.Count();
                 //Ordenando los datos

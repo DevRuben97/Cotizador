@@ -8,7 +8,8 @@ namespace Cotizador.Entitys
     public class ReportCotizacion
     {
         public decimal Total { get; set; }
-        public string Fecha { get; set; }
+        public DateTime Fecha { get; set; }
+        public DateTime Expira { get; set; }
         public string Cliente { get; set; }
         public string Dirección { get; set; }
         public string Telefono { get; set; }

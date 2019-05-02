@@ -13,8 +13,11 @@ namespace Cotizador.Models
         public int id { get; set; }
         public int idcliente { get; set; }
         public DateTime Fecha { get; set; }
+        public DateTime Expiracion { get; set; }
         [NotMapped]
         public string FormatedDate => Fecha.ToShortDateString();
+        [NotMapped]
+        public string FormatedExpiracion => Expiracion.ToShortDateString();
         [Required]
         public string Estado { get; set; }
         public decimal Total { get; set; }
