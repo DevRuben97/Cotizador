@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Cotizador.Models;
-using Cotizador.Entitys;
+using Cotizador.Models.ViewModels;
 
 namespace Cotizador.Controllers
 {
@@ -26,7 +26,7 @@ namespace Cotizador.Controllers
         {
             try
             {
-                var Usuarios = db.Usuario.ToList().Where(x => x.Usuario.Equals(User.Usuario) && x.Clave.Equals(User.Clave)).First();
+                var Usuarios = db.Usuario.ToList().Where(x => x.Usuario.Equals(User.Usuario) && x.Clave.Equals(User.Clave)).FirstOrDefault();
 
                 if (Usuarios != null)
                 {

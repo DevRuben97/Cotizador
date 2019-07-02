@@ -36,5 +36,6 @@ namespace Cotizador.Models
         public string email { get; set; }
 
         public List<Cotizaciones> Cotizaciones;
+        public List<Factura> Facturas;
     }
 }

@@ -1,37 +1,40 @@
 ﻿
 function UserLogin() {
-    $(document).ready(function () {
+    var form = $("#Login");
 
-        var form = $("#Login");
+    if (VerifyData(form)) {
 
-            if (VerifyData(form)) {
+        var button = $("#btnlogin");
+        button.text("Verificando..");
+        button.attr("disabled", true);
 
-                var button = $("#btnlogin");
-                button.text("Verificando..");
-                button.attr("disabled", true);
+        var values = form.serializeArray();
 
-                var values = form.serializeArray();
+        $.ajax({
+            method: "POST",
+            url: "/Users/Login",
+            data: values,
+            success: function (callback) {
 
-                $.ajax({
-                    method: "POST",
-                    url: "/Users/Login",
-                    data: values,
-                    success: function (callback) {
+                if (callback.Error) {
+                    $("#btnlogin").text("iniciar Sesión").attr("disabled", false);
+                    $("#btnlogin").after("<label class='text-danger'><strong>!El Usuario O Contraseña Son Incorrectos</strong></label>");
+                    $("#login-card").effect("shake");
+                }
+                else {
 
-                        if (callback.Error) {
-                            $("#btnlogin").text("iniciar Sesión").attr("disabled", false);
-                            $("#btnlogin").after("<label class='text-danger'><strong>!El Usuario O Contraseña Son Incorrectos</strong></label>");
-                            $("#login-card").effect("shake");
-                        }
-                        else {
-                           
-                            window.location.href = "/home/Index";
-                        }
-                    }
-
-                });
+                    swal({
+                        title: "Iniciar Sesión",
+                        type: "success",
+                        text: `Bienvendido: ${callback.Usuario}`
+                    }).then(function () {
+                        window.location.href = "/Home/Index";
+                    });
+                }
             }
-    });
+
+        });
+    }
 
 }
 

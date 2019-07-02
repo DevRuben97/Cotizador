@@ -9,7 +9,7 @@
             <label class="text-center">Datos Del Cliente:</label> 
         </div>
         <div class="card-body">
-            <div class="row"><!--Filas Y Colummnas-->
+            <div class="row"><!--Datos del Cliente-->
                 <div class="col-lg-3">
                     <label>Cliente: </label>
                     <input type="text" class="form-control" id="BuscarCliente" placeholder="Ingrese Un Cliente"/>
@@ -39,9 +39,15 @@
     <br /> <!--Seccion Para Agregar Productos O Servicios-->
     <div class="card">
         <div class="card-header">
-            <label>Datos Del Servicio: </label>
+            <label>Detalle de la Cotizacion: </label>
         </div>
         <div class="card-body">
+            <div class="row">
+                <div class="col-lg-3">
+                    <label>Fecha de Expiración:</label>
+                    <input type="date" class="form-control" id="Expiracion" />
+                </div>
+            </div><br />
             <div class="row">
                 <div class="col-lg-2">
                     <button class="btn btn-primary" data-target="#ServiciosModal" data-toggle="modal" onclick="VerServicios()"><i class="fas fa-plus"></i> Agregar Servicio</button>
@@ -69,9 +75,7 @@
                             <th id="total">Total</th>
                         </tr>
                     </thead>
-                    <tbody>
-  
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
         </div>

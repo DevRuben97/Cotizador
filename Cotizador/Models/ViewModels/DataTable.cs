@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Cotizador.Entitys
+namespace Cotizador.Models.ViewModels
 {
     public class DataTable
     { //Clase Entidad Que Contiene Todas Los Parametros Que El Plugin datatable Necesita.

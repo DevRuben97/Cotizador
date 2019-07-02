@@ -5,12 +5,12 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.SqlClient;
 using Cotizador.Models;
-using Cotizador.Entitys;
+using Cotizador.Models.ViewModels;
 
 namespace Cotizador.Controllers
 {
     [Security.UserFilter()]
-    public class ClientesController : Controller
+    public class ClientController : Controller
     {
         CotizadorContext context = new CotizadorContext();
 
@@ -24,7 +24,7 @@ namespace Cotizador.Controllers
         {
             try
             {
-                var clientes = context.cliente.ToList();
+                var clientes = context.Cliente.ToList();
                 int TotalRecords = clientes.Count();
                 int RecordsFiltered;
                 
@@ -100,7 +100,7 @@ namespace Cotizador.Controllers
 
             try
             {
-                context.cliente.Add(Cliente);
+                context.Cliente.Add(Cliente);
                 context.SaveChanges();
                 return Json(new { Mensaje = "El Cliente Fue Creado Correctamente", Error = false });
             }
@@ -115,12 +115,12 @@ namespace Cotizador.Controllers
         {
             try
             {
-                var cliente = context.cliente.Find(id);
+                var cliente = context.Cliente.Find(id);
                 if (cliente == null)
                 {
                     return Json(new { Mensaje = "No Se Ha Podido Encotrar El Cliente En la Base de datos", Error = true });
                 }
-                context.cliente.Remove(cliente);
+                context.Cliente.Remove(cliente);
                 context.SaveChanges();
                 return Json(new { Mensaje = "Cliente Eliminado Correctamente", Error = false });
             }
@@ -132,7 +132,7 @@ namespace Cotizador.Controllers
         [HttpGet]
         public PartialViewResult Editar(int id)
         {
-            var cliente = context.cliente.Find(id);
+            var cliente = context.Cliente.Find(id);
             if (cliente == null)
             {
                 ViewBag.Mensaje = "No Se Pudo Encontrar el Cliente Solicitado";

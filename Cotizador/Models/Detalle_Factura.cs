@@ -7,19 +7,20 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cotizador.Models
 {
-    public class DetalleCotizacion
+    public class Detalle_Factura
     {
         [Key]
         public int id { get; set; }
         public int idproducto { get; set; }
-        public int idcotizacion { get; set; }
+        public int idfactura { get; set; }
         [Required]
-        public int cantidad { get; set; } //Cantidad a cotizar
+        public int cantidad { get; set; } //Cantidad a facturar.
         [Required]
-        public decimal PrecioCotizacion { get; set; }
+        public decimal Precio_facturado { get; set; }
+        public int descuento { get; set; }
         [ForeignKey("idproducto")]
         public Producto Servicios { get; set; }
-        [ForeignKey("idcotizacion")]
-        public Cotizaciones cotizador { get; set; }
+        [ForeignKey("idfactura")]
+        public Factura  factura { get; set; }
     }
 }

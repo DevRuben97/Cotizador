@@ -8,7 +8,7 @@ using System.Web.Mvc;
 namespace Cotizador.Controllers
 {
     [Security.UserFilter()]
-    public class ServiciosController : Controller
+    public class ProductsController : Controller
     {
         Models.CotizadorContext context = new Models.CotizadorContext();
         public ActionResult Lista()
@@ -29,7 +29,7 @@ namespace Cotizador.Controllers
                 int startRec = Convert.ToInt32(Request.Form.GetValues("start")[0]);
                 int pageSize = Convert.ToInt32(Request.Form.GetValues("length")[0]);
                 //Carga De Datos:
-                var servicos = context.servicio.ToList();
+                var servicos = context.Producto.ToList();
                 //Total De Registros:
                 int totalRecords = servicos.Count();
 
@@ -38,7 +38,7 @@ namespace Cotizador.Controllers
                 {
                    servicos= servicos.Where(x => x.nombre.ToLower().Contains(Buscador)
                     || x.Descripcion.ToLower().Contains(Buscador)
-                    || x.Costo.Equals(Buscador)).ToList();
+                    || x.Precio.Equals(Buscador)).ToList();
                 }
                 //Ordenar los datos en Base A Los Datos:
                 if (!string.IsNullOrEmpty(order) && !string.IsNullOrEmpty(orderDir))
@@ -80,11 +80,11 @@ namespace Cotizador.Controllers
                     {
                         if (orderDir.Equals("asc"))
                         {
-                            servicos = servicos.OrderBy(x => x.Costo).ToList();
+                            servicos = servicos.OrderBy(x => x.Precio).ToList();
                         }
                         else
                         {
-                            servicos = servicos.OrderByDescending(x => x.Costo).ToList();
+                            servicos = servicos.OrderByDescending(x => x.Precio).ToList();
                         }
                     }
                 }
@@ -117,11 +117,11 @@ namespace Cotizador.Controllers
             return PartialView("Nuevo");
         }
         [HttpPost]
-        public JsonResult Nuevo(Models.Servicios servicios)
+        public JsonResult Nuevo(Models.Producto servicios)
         {
             try
             {
-                    context.servicio.Add(servicios);
+                    context.Producto.Add(servicios);
                     context.SaveChanges();
                     return Json(new { Mensaje = "Se Ha  Credado Correctamente El Servicio", Error=false });
                
@@ -137,7 +137,7 @@ namespace Cotizador.Controllers
         {
             try
             {
-                var servicio = context.servicio.Find(id);
+                var servicio = context.Producto.Find(id);
                 return PartialView("Editar",servicio);
 
             }
@@ -148,7 +148,7 @@ namespace Cotizador.Controllers
             }
         }
         [HttpPost]
-        public JsonResult Editar(Models.Servicios servicios)
+        public JsonResult Editar(Models.Producto servicios)
         {
             try
             {
@@ -173,14 +173,14 @@ namespace Cotizador.Controllers
         {
             try
             {
-                var servicio = context.servicio.Find(id);
+                var servicio = context.Producto.Find(id);
                 if (servicio == null)
                 {
                     return Json(new { Mensaje = "El Servicio No Fue Encontrado, Intente Otra Vez.", Status = false });
                 }
                 else
                 {
-                    context.servicio.Remove(servicio);
+                    context.Producto.Remove(servicio);
                     context.SaveChanges();
                     return Json(new { Mensaje = "El Servicio Fue Eliminado Correctamente", Status = true });
                 }

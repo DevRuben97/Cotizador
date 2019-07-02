@@ -8,11 +8,15 @@ namespace Cotizador.Models
 {
     public class CotizadorContext :DbContext
     {
-       public DbSet<Servicios> servicio { get; set; }
-       public DbSet<Clientes> cliente { get; set; }
-       public DbSet<Cotizaciones> cotizacion { get; set; }
-       public DbSet<DetalleCotizacion> detalleCoti { get; set; }
+       public DbSet<Producto> Producto { get; set; }
+        public DbSet<Categoria> Categoria { get; set; }
+        public DbSet<Clientes> Cliente { get; set; }
+        public DbSet<Factura> Factura { get; set; }
+        public DbSet<Detalle_Factura> Detalle_Factura { get; set; }
+        public DbSet<Cotizaciones> Cotizacion { get; set; }
+       public DbSet<DetalleCotizacion> Detalle_Cotizacion { get; set; }
        public DbSet<Usuarios> Usuario { get; set; }
+       public DbSet<Historial_Producto> historial_Producto { get; set; }
 
         public CotizadorContext() : base("ConectInfo")
         {
@@ -23,18 +27,9 @@ namespace Cotizador.Models
         {
             //Configuraciones Adicionales A La Tabla.
             modelBuilder.Entity<Cotizaciones>().Property(x => x.Total).HasPrecision(18, 2);
-            modelBuilder.Entity<Servicios>().Property(x => x.Costo).HasPrecision(18, 2);
+            modelBuilder.Entity<Producto>().Property(x => x.Precio).HasPrecision(18, 2);
             modelBuilder.Entity<DetalleCotizacion>().Property(x => x.PrecioCotizacion).HasPrecision(5, 3);
             
-
-            //Configuracion De la Tabla Usuario
-            modelBuilder.Entity<Usuarios>().HasKey(x => x.id);
-            modelBuilder.Entity<Usuarios>().Property(x => x.Nombre).HasColumnType("varchar").HasMaxLength(30).IsRequired();
-            modelBuilder.Entity<Usuarios>().Property(x => x.Apellido).HasColumnType("varchar").HasMaxLength(30).IsRequired();
-            modelBuilder.Entity<Usuarios>().Property(x => x.Telefono).HasColumnType("varchar").HasMaxLength(13).IsRequired();
-            modelBuilder.Entity<Usuarios>().Property(x => x.Direccion).HasColumnType("varchar").HasMaxLength(50).IsRequired();
-            modelBuilder.Entity<Usuarios>().Property(x => x.Usuario).HasColumnType("varchar").HasMaxLength(30).IsRequired();
-            modelBuilder.Entity<Usuarios>().Property(x => x.Clave).HasColumnType("varchar").HasMaxLength(30).IsRequired();
 
             //Configuracion de la tabla cotizaciones
             modelBuilder.Entity<Cotizaciones>().Property(x => x.Fecha).HasColumnType("date");
@@ -42,6 +37,11 @@ namespace Cotizador.Models
 
             //Cofiguracion de la tabla Detalle Cotizacion
             modelBuilder.Entity<DetalleCotizacion>().Property(x => x.PrecioCotizacion).HasPrecision(18, 2);
+
+            //Configuracion de la tabla de facturas:
+            modelBuilder.Entity<Factura>().Property(x => x.Impuestos).HasPrecision(18, 2);
+            modelBuilder.Entity<Factura>().Property(x => x.Total).HasPrecision(18, 2);
+            modelBuilder.Entity<Detalle_Factura>().Property(x => x.Precio_facturado).HasPrecision(18, 2);
 
             base.OnModelCreating(modelBuilder);
         }

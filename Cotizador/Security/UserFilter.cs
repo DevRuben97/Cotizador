@@ -10,13 +10,23 @@ namespace Cotizador.Security
     {
         //Variables Globales de la clase:
 
-        public string Role { get; set; }
+        public string Role { get; set; } //Rol del Usuario
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             if (HttpContext.Current.Session["IsUserLogin"] == null || (bool)HttpContext.Current.Session["IsUserLogin"]==false)
             {
-                filterContext.Result = new RedirectResult("/Users/Login");
+                //Obtener el usuario actual:
+                Models.Usuarios user =(Models.Usuarios) HttpContext.Current.Session["User"];
+                if (user.Rol.Equals(Role) == false)
+                {
+                    filterContext.Result = new RedirectResult("/Security/InvalidAccess");
+                }
+                else
+                {
+                    filterContext.Result = new RedirectResult("/Security/Login");
+                }
+                
             }
            
             base.OnActionExecuting(filterContext);

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Cotizador.Entitys
+namespace Cotizador.Models.ViewModels
 {
-    public class ReportCotizacion
+    public class ReportQuote
     {
         public decimal Total { get; set; }
         public DateTime Fecha { get; set; }

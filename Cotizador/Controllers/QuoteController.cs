@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Cotizador.Entitys;
+using Cotizador.Models.ViewModels;
 using Cotizador.Models;
 using System.Data.Entity;
 using Microsoft.Reporting.WebForms;
@@ -13,7 +13,7 @@ using System.IO;
 namespace Cotizador.Controllers
 {
     [Security.UserFilter()]
-    public class CotizadorController : Controller
+    public class QuoteController : Controller
     {
         CotizadorContext context = new CotizadorContext();
 
@@ -25,7 +25,7 @@ namespace Cotizador.Controllers
         public PartialViewResult Detalle(int CotID)//Devolver el detalle correspondiente 
         {
 
-            var detalle = context.detalleCoti.Where(x => x.idcotizacion.Equals(CotID))
+            var detalle = context.Detalle_Cotizacion.Where(x => x.idcotizacion.Equals(CotID))
                 .Include(c => c.Servicios).ToList();
             return PartialView(detalle);
         }
@@ -44,12 +44,13 @@ namespace Cotizador.Controllers
                     var fechas = Table.Search.value.Split('/');
                     var Desde = Convert.ToDateTime(fechas[0]);
                     var Hasta = Convert.ToDateTime(fechas[1]);
-                    cotizador = context.cotizacion.Where(x => x.Fecha>= Desde && x.Fecha <=Hasta.Date)
+                    cotizador = context.Cotizacion.Where(x => x.Fecha>= Desde && x.Fecha <=Hasta.Date)
                         .Include(x => x.cliente).ToList();
                 }
                 else
                 {
-                    cotizador = context.cotizacion.Include(l => l.cliente).Where(x => x.Expiracion.Date.Equals(DateTime.Now.Date) != true).ToList();
+                    var Date = DateTime.Now.Date;
+                    cotizador = context.Cotizacion.Include(l => l.cliente).Where(x => x.Expiracion.Equals(Date) != true).ToList();
                 }
                 TotalRecords = cotizador.Count();
                 //Ordenando los datos
@@ -84,7 +85,7 @@ namespace Cotizador.Controllers
                     data =cotizador
                 }, JsonRequestBehavior.AllowGet);
             }
-            catch(Exception ex)
+            catch
             {
                 var errorList = new List<Cotizaciones>();
                 return Json(new
@@ -103,13 +104,13 @@ namespace Cotizador.Controllers
             return View();
         }
         [HttpPost]
-        public JsonResult Nuevo(string Ncliente ,string Fecha,decimal Total, DetalleCotizacion[] Detalle)
+        public JsonResult Nuevo(string Ncliente ,string Fecha,string Expiracion,decimal Total, DetalleCotizacion[] Detalle)
         {
             try
             {
-                
-                Clientes Client = context.cliente.ToList()
-                    .Where(x => x.nombre.ToLower().Equals(Ncliente.ToLower())).First();
+
+                Clientes Client = context.Cliente.ToList()
+                    .Where(x => x.nombre.ToLower().Equals(Ncliente.ToLower())).FirstOrDefault();
                 Total+= 0.00m;
 
                 if (Client!= null)
@@ -119,29 +120,35 @@ namespace Cotizador.Controllers
                     DateTime Date = new DateTime(Convert.ToInt32(dateData[2]),
                         Convert.ToInt32(dateData[1]), Convert.ToInt32(dateData[0]));
 
+                    //Obtener la fecha de expiración: Formato("2019-05-16")
+                    dateData = Expiracion.Split('-');
+                    DateTime ExpirationDate = new DateTime(Convert.ToInt32(dateData[0]), Convert.ToInt32(dateData[1]),
+                        Convert.ToInt32(dateData[2]));
+
                     Cotizaciones cotizador = new Cotizaciones
                     {
                         idcliente = Client.id,
                         Total = Total,
                         Fecha = Date,
+                        Expiracion= ExpirationDate,
                         Estado = "REALIZADO"
                         
                     };
 
-
-                    context.cotizacion.Add(cotizador);
+                    //Guardar la cotizacion
+                    context.Cotizacion.Add(cotizador);
                     context.SaveChanges();
-                    int CotiID = cotizador.id;
+                    int CotiID = cotizador.id; //obtener el id generado
 
 
                     for (int i = 0; i < Detalle.Length; i++)
                     {
                         Detalle[i].idcotizacion = CotiID;
                         Detalle[i].PrecioCotizacion += 0.00m;
-                        context.detalleCoti.Add(Detalle[i]);
+                        context.Detalle_Cotizacion.Add(Detalle[i]);
                     }
 
-                    context.SaveChanges();
+                    context.SaveChanges(); //Guardar el detalle de la cotizacion.
 
                     return Json(new { Mensaje = "La Cotizacion fue Creada Correctamente", Error = false }, JsonRequestBehavior.AllowGet);
 
@@ -165,7 +172,7 @@ namespace Cotizador.Controllers
         {// Buscar los Clientes A Seleccionar, para la cotizacion.
             try
             {
-                var clientes = context.cliente.ToList()
+                var clientes = context.Cliente.ToList()
                     .Where(x => x.nombre.ToLower().Contains(search.ToLower())).Select(x => x.nombre)
                     .Take(5).ToArray();
 
@@ -225,7 +232,7 @@ namespace Cotizador.Controllers
         {
             try
             {
-                var model = context.cotizacion.Where(x => x.id == Id).First();
+                var model = context.Cotizacion.Where(x => x.id == Id).First();
                 if(model!= null)
                 {
                     model.Estado = "ANULADO";
@@ -248,7 +255,7 @@ namespace Cotizador.Controllers
         public ActionResult Report(int id)// Devolver el pdf del Reporte de Cotizacion.
         {
             LocalReport report = new LocalReport();
-            List<Entitys.ReportCotizacion> DataLists = new List<ReportCotizacion>();
+            List<ReportQuote> DataLists = new List<ReportQuote>();
             string path = Path.Combine(Server.MapPath("~/Reports"), "Coti.rdlc");
 
             if (System.IO.File.Exists(path))
@@ -260,13 +267,13 @@ namespace Cotizador.Controllers
                 return RedirectToAction("Lista");
             }
             //Solicitar los datos al servidor por medio de un procedimiento almacenado
-            DataLists = context.Database.SqlQuery<ReportCotizacion>("EXEC ReportCotizacion @idcotizacion",
+            DataLists = context.Database.SqlQuery<ReportQuote>("EXEC ReportCotizacion @idcotizacion",
                new System.Data.SqlClient.SqlParameter("@idcotizacion", id)).ToList();
 
            ReportDataSource dataSource = new ReportDataSource("CotiData", DataLists);
            var parameter = new ReportParameter("Impuesto", Convert.ToString((DataLists[0].Total * 0.18m)),true);
            report.DataSources.Add(dataSource);
-           //report.SetParameters(parameter);
+           report.SetParameters(parameter);
             
 
             string reportType = "PDF";
@@ -286,7 +293,7 @@ namespace Cotizador.Controllers
                 out streams,
                 out warnings);
 
-            return File(renderedBytes, "application/pdf","Cotizacion-" + DataLists[0].Fecha+".pdf");
+            return File(renderedBytes, "application/pdf",$"Cotizacion-{DataLists[0].Cliente}-{DataLists[0].Fecha.ToShortDateString()}.pdf");
         }
     }
 }

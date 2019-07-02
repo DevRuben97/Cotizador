@@ -4,24 +4,29 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
 namespace Cotizador.Models
 {
-    public class Cotizaciones
+    public class Factura
     {
         [Key]
         public int id { get; set; }
         public int idcliente { get; set; }
         public int id_usuario { get; set; }
+        public string Codigo { get; set; }  //Codigo de factura.
+        public string Cotizacion { get; set; }//Codigo de cotizacion
+        public int id_cotizacion { get; set; } //id_cotizacion
         public DateTime Fecha { get; set; }
-        public DateTime Expiracion { get; set; }
         [NotMapped]
         public string FormatedDate => Fecha.ToShortDateString();
-        [NotMapped]
-        public string FormatedExpiracion => Expiracion.ToShortDateString();
         [Required]
-        public string Estado { get; set; }
+        [StringLength(25)]
+        public string Forma_Pago { get; set; }
+        public string NCF { get; set; }
+        public decimal Impuestos { get; set; }
         public decimal Total { get; set; }
+        [Required]
+        [StringLength(20)]
+        public string Estado { get; set; }
 
         //Llaves foraneas y propiedades de navegacion.
         [ForeignKey("idcliente")]
@@ -29,6 +34,6 @@ namespace Cotizador.Models
         [ForeignKey("id_usuario")]
         public Usuarios Usuario { get; set; }
 
-        public List<DetalleCotizacion> Detalles { get; set; }
+        public List<Detalle_Factura> Detalles { get; set; }
     }
 }

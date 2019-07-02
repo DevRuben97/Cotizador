@@ -128,6 +128,7 @@ function SelectServicio(datos) {
 function GuardarCotizacion() {//Guardar la Cotizacion Hecha.
 
     var date = new Date();
+    var Expiracion = $("#Expiracion").val();
     var Detalles = [];
     
 
@@ -150,7 +151,7 @@ function GuardarCotizacion() {//Guardar la Cotizacion Hecha.
 
     });
 
-    var data = { Ncliente: client, Fecha: fecha, Total: TotalCotizacion, Detalle: Detalles };
+    var data = { Ncliente: client, Fecha: fecha, Expiracion: Expiracion, Total: TotalCotizacion, Detalle: Detalles };
     
     
     //Enviar Los Datos Obtenidos
